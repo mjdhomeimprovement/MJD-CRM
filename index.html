@@ -715,6 +715,184 @@
         </div>
     </div>
 
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm" onsubmit="saveLead(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="projectType" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <input type="number" class="form-input" name="estimatedValue" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source</label>
+                        <select class="form-select" name="source">
+                            <option value="referral">Referral</option>
+                            <option value="website">Website</option>
+                            <option value="social">Social Media</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Lead</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Project</h3>
+                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="projectClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget</label>
+                        <input type="number" class="form-input" name="budget" placeholder="$">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Invoice</h3>
+                <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" onsubmit="saveInvoice(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="invoiceClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project</label>
+                        <select class="form-select" name="projectId" id="invoiceProjectSelect">
+                            <option value="">Select project (optional)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Team Member</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="teamForm" onsubmit="saveTeamMember(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hourly Rate</label>
+                        <input type="number" step="0.01" class="form-input" name="rate" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Skills</label>
+                        <input type="text" class="form-input" name="skills" placeholder="e.g., Plumbing, Electrical, Carpentry">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Team Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="offline-indicator" id="offlineIndicator">
         Offline Mode - Data will sync when connection is restored
     </div>
