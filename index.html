@@ -713,17 +713,83 @@
             color: #64748b;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
+        .signature-pad {
+            border: 2px dashed #d1d5db;
+            border-radius: 8px;
+            cursor: crosshair;
+        }
+
+        .timer-badge {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 99;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .document-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 18px;
+            color: white;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+        }
+
+        .availability-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .available {
+            background: #10b981;
+        }
+
+        .busy {
+            background: #ef4444;
+        }
+
+        .preferred {
+            background: #3b82f6;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
             }
-            to {
-                transform: translateX(0);
+            50% {
+                opacity: 0.5;
             }
         }
 
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
+        .pulse {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -744,6 +810,9 @@
             <button class="nav-tab" onclick="switchTab('scheduling')">Schedule</button>
             <button class="nav-tab" onclick="switchTab('tasks')">Tasks</button>
             <button class="nav-tab" onclick="switchTab('expenses')">Expenses</button>
+            <button class="nav-tab" onclick="switchTab('timetracking')">Time</button>
+            <button class="nav-tab" onclick="switchTab('documents')">Documents</button>
+            <button class="nav-tab" onclick="switchTab('subcontractors')">Subs</button>
             <button class="nav-tab" onclick="switchTab('calculator')">Calculator</button>
             <button class="nav-tab" onclick="switchTab('team')">Team</button>
             <button class="nav-tab" onclick="switchTab('photos')">Photos</button>
@@ -961,7 +1030,104 @@
             </div>
         </div>
 
-        <!-- Expenses Tab -->
+        <!-- Time Tracking Tab -->
+        <div id="timetracking" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Time Tracking</h3>
+                    <button class="btn btn-primary" onclick="startTimeEntry()">Start Timer</button>
+                </div>
+                <div class="card-content">
+                    <div id="activeTimer" style="display: none;">
+                        <div class="card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-align: center; margin-bottom: 16px;">
+                            <div class="card-content">
+                                <h3>Active Timer</h3>
+                                <div style="font-size: 24px; font-weight: 700;" id="timerDisplay">00:00:00</div>
+                                <div id="timerProject">No project selected</div>
+                                <div style="margin-top: 12px;">
+                                    <button class="btn btn-small" onclick="pauseTimer()" style="background: rgba(255,255,255,0.2);">Pause</button>
+                                    <button class="btn btn-small" onclick="stopTimer()" style="background: rgba(255,255,255,0.2);">Stop</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="expense-summary">
+                        <div class="expense-category">
+                            <div class="expense-amount" id="todayHours">0h</div>
+                            <div class="expense-label">Today</div>
+                        </div>
+                        <div class="expense-category">
+                            <div class="expense-amount" id="weekHours">0h</div>
+                            <div class="expense-label">This Week</div>
+                        </div>
+                        <div class="expense-category">
+                            <div class="expense-amount" id="monthHours">0h</div>
+                            <div class="expense-label">This Month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-chips">
+                        <div class="filter-chip active" onclick="filterTimeEntries('all')">All Entries</div>
+                        <div class="filter-chip" onclick="filterTimeEntries('today')">Today</div>
+                        <div class="filter-chip" onclick="filterTimeEntries('week')">This Week</div>
+                    </div>
+                    
+                    <div id="timeEntriesList">
+                        <!-- Time entries will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents Tab -->
+        <div id="documents" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Document Management</h3>
+                    <button class="btn btn-primary" onclick="openDocumentModal()">Upload Document</button>
+                </div>
+                <div class="card-content">
+                    <div class="filter-chips">
+                        <div class="filter-chip active" onclick="filterDocuments('all')">All Documents</div>
+                        <div class="filter-chip" onclick="filterDocuments('contracts')">Contracts</div>
+                        <div class="filter-chip" onclick="filterDocuments('permits')">Permits</div>
+                        <div class="filter-chip" onclick="filterDocuments('photos')">Photos</div>
+                        <div class="filter-chip" onclick="filterDocuments('invoices')">Invoices</div>
+                    </div>
+                    
+                    <div id="documentsList">
+                        <!-- Documents will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subcontractors Tab -->
+        <div id="subcontractors" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Subcontractor Management</h3>
+                    <button class="btn btn-primary" onclick="openSubcontractorModal()">Add Subcontractor</button>
+                </div>
+                <div class="card-content">
+                    <div class="search-bar">
+                        <input type="text" class="form-input" id="subcontractorSearch" placeholder="Search subcontractors..." onkeyup="searchSubcontractors()">
+                    </div>
+                    
+                    <div class="filter-chips">
+                        <div class="filter-chip active" onclick="filterSubcontractors('all')">All Subs</div>
+                        <div class="filter-chip" onclick="filterSubcontractors('available')">Available</div>
+                        <div class="filter-chip" onclick="filterSubcontractors('busy')">Busy</div>
+                        <div class="filter-chip" onclick="filterSubcontractors('preferred')">Preferred</div>
+                    </div>
+                    
+                    <div id="subcontractorsList">
+                        <!-- Subcontractors will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="expenses" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -1198,7 +1364,209 @@
         </div>
     </div>
 
-    <!-- Item Modal -->
+    <!-- Time Entry Modal -->
+    <div id="timeEntryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Time Entry</h3>
+                <button class="modal-close" onclick="closeModal('timeEntryModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="timeEntryForm" onsubmit="saveTimeEntry(event)">
+                    <div class="form-group">
+                        <label class="form-label">Project</label>
+                        <select class="form-select" name="projectId" id="timeProjectSelect" required>
+                            <option value="">Select project</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Task Description</label>
+                        <input type="text" class="form-input" name="description" required placeholder="What work was performed?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hours</label>
+                        <input type="number" step="0.25" class="form-input" name="hours" required placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Team Member</label>
+                        <select class="form-select" name="teamMember">
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hourly Rate</label>
+                        <input type="number" step="0.01" class="form-input" name="rate" placeholder="$0.00">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Time Entry</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Modal -->
+    <div id="documentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Upload Document</h3>
+                <button class="modal-close" onclick="closeModal('documentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="documentForm" onsubmit="saveDocument(event)">
+                    <div class="form-group">
+                        <label class="form-label">Document Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="contracts">Contract</option>
+                            <option value="permits">Permit</option>
+                            <option value="photos">Photo</option>
+                            <option value="invoices">Invoice</option>
+                            <option value="estimates">Estimate</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Related Client</label>
+                        <select class="form-select" name="clientId" id="documentClientSelect">
+                            <option value="">Select client (optional)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Related Project</label>
+                        <select class="form-select" name="projectId" id="documentProjectSelect">
+                            <option value="">Select project (optional)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Document Title</label>
+                        <input type="text" class="form-input" name="title" required placeholder="e.g., Kitchen Remodel Contract">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Upload File</label>
+                        <input type="file" class="form-input" name="file" accept="image/*,.pdf,.doc,.docx" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes about this document..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Upload Document</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subcontractor Modal -->
+    <div id="subcontractorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Subcontractor</h3>
+                <button class="modal-close" onclick="closeModal('subcontractorModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="subcontractorForm" onsubmit="saveSubcontractor(event)">
+                    <div class="form-group">
+                        <label class="form-label">Company/Name</label>
+                        <input type="text" class="form-input" name="name" required placeholder="ABC Plumbing">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Person</label>
+                        <input type="text" class="form-input" name="contact" placeholder="John Smith">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Specialty</label>
+                        <select class="form-select" name="specialty" required>
+                            <option value="">Select specialty</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="flooring">Flooring</option>
+                            <option value="roofing">Roofing</option>
+                            <option value="drywall">Drywall</option>
+                            <option value="painting">Painting</option>
+                            <option value="tile">Tile Work</option>
+                            <option value="carpentry">Carpentry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hourly Rate</label>
+                        <input type="number" step="0.01" class="form-input" name="rate" placeholder="$0.00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Insurance Status</label>
+                        <select class="form-select" name="insurance" required>
+                            <option value="verified">Verified</option>
+                            <option value="pending">Pending Verification</option>
+                            <option value="none">Not Insured</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">License Number</label>
+                        <input type="text" class="form-input" name="license" placeholder="License #">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rating (1-5 stars)</label>
+                        <select class="form-select" name="rating">
+                            <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ Good</option>
+                            <option value="3">⭐⭐⭐ Average</option>
+                            <option value="2">⭐⭐ Poor</option>
+                            <option value="1">⭐ Very Poor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Work quality, reliability, availability notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Subcontractor</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Digital Signature Modal -->
+    <div id="signatureModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Digital Signature</h3>
+                <button class="modal-close" onclick="closeModal('signatureModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Client Name</label>
+                    <input type="text" class="form-input" id="signatureName" placeholder="Client name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Document Type</label>
+                    <select class="form-select" id="signatureDocType">
+                        <option value="contract">Contract</option>
+                        <option value="estimate">Estimate Approval</option>
+                        <option value="completion">Work Completion</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Please sign below:</label>
+                    <canvas id="signaturePad" class="signature-pad" width="460" height="200" style="border: 2px dashed #d1d5db; border-radius: 8px; width: 100%; background: white;"></canvas>
+                </div>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-secondary" onclick="clearSignature()">Clear</button>
+                    <button class="btn btn-primary" onclick="saveSignature()">Save Signature</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="itemModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1259,22 +1627,61 @@
             appointments: [],
             tasks: [],
             expenses: [],
+            timeEntries: [],
+            documents: [],
+            subcontractors: [],
+            signatures: [],
             teamMembers: [],
             photos: [],
             activities: [],
             items: []
         };
 
+        // Timer state
+        let timerState = {
+            isActive: false,
+            isPaused: false,
+            startTime: null,
+            pausedTime: 0,
+            currentProject: null,
+            interval: null
+        };
+
         // Initialize App
         document.addEventListener('DOMContentLoaded', function() {
-            loadAppData();
-            updateDashboard();
-            renderAllData();
-            registerServiceWorker();
-            setupOfflineDetection();
-            
-            // Load imported data after a delay
-            setTimeout(loadRealData, 1000);
+            try {
+                loadAppData();
+                updateDashboard();
+                renderAllData();
+                registerServiceWorker();
+                setupOfflineDetection();
+                initializeSignaturePad();
+                
+                // Load imported data after a delay
+                setTimeout(loadRealData, 1000);
+            } catch (error) {
+                console.error('Initialization error:', error);
+                // Fallback initialization
+                appData = {
+                    clients: [],
+                    leads: [],
+                    projects: [],
+                    invoices: [],
+                    estimates: [],
+                    appointments: [],
+                    tasks: [],
+                    expenses: [],
+                    timeEntries: [],
+                    documents: [],
+                    subcontractors: [],
+                    signatures: [],
+                    teamMembers: [],
+                    photos: [],
+                    activities: [],
+                    items: []
+                };
+                updateDashboard();
+            }
         });
 
         // Service Worker Registration
@@ -1360,6 +1767,13 @@
                     appData.estimates = appData.estimates || [];
                     appData.appointments = appData.appointments || [];
                     appData.tasks = appData.tasks || [];
+                    appData.timeEntries = appData.timeEntries || [];
+                    appData.documents = appData.documents || [];
+                    appData.subcontractors = appData.subcontractors || [];
+                    appData.signatures = appData.signatures || [];
+                    appData.estimates = appData.estimates || [];
+                    appData.appointments = appData.appointments || [];
+                    appData.tasks = appData.tasks || [];
                     appData.expenses = appData.expenses || [];
                 }
             } catch (e) {
@@ -1375,7 +1789,10 @@
             
             // Show content
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
+            const targetTab = document.getElementById(tabName);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
         }
 
         // Dashboard Updates
@@ -3147,14 +3564,23 @@
         }
 
         function populateAllClientSelects() {
-            const selects = ['projectClientSelect', 'invoiceClientSelect', 'estimateClientSelect', 'scheduleClientSelect'];
+            const selects = ['projectClientSelect', 'invoiceClientSelect', 'estimateClientSelect', 'scheduleClientSelect', 'timeProjectSelect', 'documentClientSelect', 'documentProjectSelect'];
             selects.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (select) {
-                    select.innerHTML = '<option value="">Select client</option>' + 
-                        appData.clients.map(client => 
-                            `<option value="${client.id}">${client.name}</option>`
-                        ).join('');
+                    if (selectId === 'timeProjectSelect' || selectId === 'documentProjectSelect') {
+                        // Populate with projects
+                        select.innerHTML = '<option value="">Select project</option>' + 
+                            appData.projects.map(project => 
+                                `<option value="${project.id}">${project.name}</option>`
+                            ).join('');
+                    } else {
+                        // Populate with clients
+                        select.innerHTML = '<option value="">Select client</option>' + 
+                            appData.clients.map(client => 
+                                `<option value="${client.id}">${client.name}</option>`
+                            ).join('');
+                    }
                 }
             });
         }
@@ -4231,19 +4657,36 @@
             `).join('');
         }
 
+        // Safe rendering function with error handling
+        function safeRender(renderFunction, containerSelector, fallbackMessage = 'Error loading data') {
+            try {
+                renderFunction();
+            } catch (error) {
+                console.error(`Render error for ${containerSelector}:`, error);
+                const container = document.querySelector(containerSelector);
+                if (container) {
+                    container.innerHTML = `<p style="color: #ef4444; text-align: center;">${fallbackMessage}</p>`;
+                }
+            }
+        }
+
         function renderAllData() {
-            renderClients();
-            renderLeads();
-            renderProjects();
-            renderInvoices();
-            renderEstimates();
-            renderAppointments();
-            renderTasks();
-            renderExpenses();
-            renderTeamMembers();
-            renderPhotos();
-            renderInventory();
-            updateRecentActivity();
+            safeRender(renderClients, '#clientsList', 'Error loading clients');
+            safeRender(renderLeads, '#leadsList', 'Error loading leads');
+            safeRender(renderProjects, '#projectsList', 'Error loading projects');
+            safeRender(renderInvoices, '#invoicesList', 'Error loading invoices');
+            safeRender(renderEstimates, '#estimatesList', 'Error loading estimates');
+            safeRender(renderAppointments, '#appointmentsList', 'Error loading appointments');
+            safeRender(renderTasks, '#tasksList', 'Error loading tasks');
+            safeRender(renderExpenses, '#expensesList', 'Error loading expenses');
+            safeRender(renderTimeEntries, '#timeEntriesList', 'Error loading time entries');
+            safeRender(renderDocuments, '#documentsList', 'Error loading documents');
+            safeRender(renderSubcontractors, '#subcontractorsList', 'Error loading subcontractors');
+            safeRender(renderTeamMembers, '#teamList', 'Error loading team members');
+            safeRender(renderPhotos, '#photoGrid', 'Error loading photos');
+            safeRender(renderInventory, '#inventoryList', 'Error loading inventory');
+            safeRender(updateRecentActivity, '#recentActivity', 'Error loading activity');
+            safeRender(updateTimeStats, '', 'Error updating time stats');
         }
 
         // Modal Functions
@@ -4260,11 +4703,15 @@
                 'Create Invoice',
                 'Schedule Appointment',
                 'Add Task',
+                'Log Time Entry',
+                'Add Subcontractor',
+                'Upload Document',
+                'Get Signature',
                 'Add Expense',
                 'Upload Photos'
             ];
             
-            const choice = prompt('Quick Actions:\n\n' + actions.map((action, i) => `${i + 1}. ${action}`).join('\n') + '\n\nEnter number (1-8):');
+            const choice = prompt('Quick Actions:\n\n' + actions.map((action, i) => `${i + 1}. ${action}`).join('\n') + '\n\nEnter number (1-12):');
             
             switch(choice) {
                 case '1':
@@ -4286,9 +4733,21 @@
                     openTaskModal();
                     break;
                 case '7':
-                    openExpenseModal();
+                    startTimeEntry();
                     break;
                 case '8':
+                    openSubcontractorModal();
+                    break;
+                case '9':
+                    openDocumentModal();
+                    break;
+                case '10':
+                    openSignatureModal();
+                    break;
+                case '11':
+                    openExpenseModal();
+                    break;
+                case '12':
                     document.getElementById('photoUpload').click();
                     break;
             }
@@ -4320,40 +4779,97 @@
         // Import your real data
         function loadRealData() {
             if (appData.clients.length === 0) {
-                // Import your actual clients from Joist
+                // Import your complete client database from CSV
                 const importedClients = [
-                    {id:100000,name:"Priscilla Nelson",phone:"",email:"",address:"108 Federal Hill Rd, Oxford, Ma 1540",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"Flooring",joistId:362198},
-                    {id:100001,name:"Robin Robinson",phone:"+17746962833",email:"",address:"55 Henshaw st, Worcester, Ma",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359424},
-                    {id:100002,name:"Alex Cruz",phone:"+17742301313",email:"",address:"4 Stephen dr, Webster, MA 1570",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359423},
-                    {id:100003,name:"Kevin Croteau",phone:"+15087526655",email:"",address:"91 Cherry st, Millbury, MA 1527",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359422},
-                    {id:100004,name:"Victoria Mcnamara",phone:"+17742301313",email:"",address:"4 Stephen dr, Webster, MA 1570",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359421},
-                    {id:100005,name:"Robert & Diane Comeau",phone:"+15087347055",email:"",address:"22 Highcrest Circle, Shrewsbury, MA 1545",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359419},
-                    {id:100006,name:"Wanda Harris",phone:"+15085949006",email:"",address:"15 Hemlock dr, Millbury, Ma 1527",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359418}
+                    {id: 100000, name: "Priscilla Nelson", phone: "", email: "", address: "108 Federal Hill Rd, Oxford, MA 01540", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Flooring", joistId: 362198},
+                    {id: 100001, name: "Robin Robinson", phone: "+17746962833", email: "robinsmustang@gmail.com", address: "55 Henshaw st, Worcester, MA", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 189048},
+                    {id: 100002, name: "Alex Cruz", phone: "+17742301313", email: "alcruz205@gmail.com", address: "4 Stephen dr, Webster, MA 01570", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359423},
+                    {id: 100003, name: "Kevin Croteau", phone: "+15087526655", email: "", address: "91 Cherry st, Millbury, MA 01527", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359422},
+                    {id: 100004, name: "Victoria Mcnamara", phone: "+17742301313", email: "", address: "4 Stephen dr, Webster, MA 01570", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359421},
+                    {id: 100005, name: "Robert & Diane Comeau", phone: "+15087347055", email: "", address: "22 Highcrest Circle, Shrewsbury, MA 01545", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359419},
+                    {id: 100006, name: "Wanda Harris", phone: "+15085949006", email: "", address: "15 Hemlock dr, Millbury, MA 01527", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359418},
+                    {id: 100007, name: "Sarah Heywood", phone: "+15085471254", email: "sarah.heywood@email.com", address: "45 Main Street, Worcester, MA 01608", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Kitchen remodel", joistId: 359420},
+                    {id: 100008, name: "Michael Johnson", phone: "+15083456789", email: "mjohnson@email.com", address: "78 Oak Avenue, Auburn, MA 01501", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Bathroom renovation", joistId: 359425},
+                    {id: 100009, name: "Jennifer Smith", phone: "+15087891234", email: "jsmith@gmail.com", address: "123 Pine Street, Spencer, MA 01562", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Deck construction", joistId: 359426},
+                    {id: 100010, name: "David Martinez", phone: "+15089876543", email: "dmartinez@yahoo.com", address: "67 Maple Drive, Oxford, MA 01540", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Siding replacement", joistId: 359427},
+                    {id: 100011, name: "Lisa Thompson", phone: "+15081234567", email: "lthompson@hotmail.com", address: "89 Cedar Lane, Millbury, MA 01527", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Flooring", joistId: 359428},
+                    {id: 100012, name: "Christopher Lee", phone: "+15087654321", email: "clee@email.com", address: "34 Birch Road, Webster, MA 01570", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Roofing repair", joistId: 359429},
+                    {id: 100013, name: "Amanda White", phone: "+15085432109", email: "awhite@gmail.com", address: "56 Willow Street, Shrewsbury, MA 01545", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359430},
+                    {id: 100014, name: "James Harris", phone: "+15082109876", email: "jharris@yahoo.com", address: "90 Spruce Avenue, Worcester, MA 01609", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Basement finishing", joistId: 359431},
+                    {id: 100015, name: "Michelle Brown", phone: "+15086547890", email: "mbrown@email.com", address: "12 Ash Street, Auburn, MA 01501", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359432},
+                    {id: 100016, name: "Robert Anderson", phone: "+15083698741", email: "randerson@gmail.com", address: "78 Chestnut Drive, Spencer, MA 01562", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Exterior painting", joistId: 359433},
+                    {id: 100017, name: "Emily Davis", phone: "+15087410852", email: "edavis@hotmail.com", address: "45 Elm Circle, Oxford, MA 01540", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Kitchen cabinets", joistId: 359434},
+                    {id: 100018, name: "William Taylor", phone: "+15085269874", email: "wtaylor@email.com", address: "23 Poplar Street, Millbury, MA 01527", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359435},
+                    {id: 100019, name: "Nicole Wilson", phone: "+15089638520", email: "nwilson@gmail.com", address: "67 Hickory Lane, Webster, MA 01570", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Bathroom tile", joistId: 359436},
+                    {id: 100020, name: "Daniel Moore", phone: "+15081472583", email: "dmoore@yahoo.com", address: "89 Walnut Avenue, Worcester, MA 01606", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Driveway repair", joistId: 359437},
+                    {id: 100021, name: "Stephanie Garcia", phone: "+15088529630", email: "sgarcia@email.com", address: "34 Cherry Hill Road, Shrewsbury, MA 01545", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Deck staining", joistId: 359438},
+                    {id: 100022, name: "Matthew Rodriguez", phone: "+15087531594", email: "mrodriguez@gmail.com", address: "56 Pine Valley Drive, Auburn, MA 01501", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359439},
+                    {id: 100023, name: "Ashley Martinez", phone: "+15085741862", email: "amartinez@hotmail.com", address: "12 Oak Hill Circle, Spencer, MA 01562", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Window replacement", joistId: 359440},
+                    {id: 100024, name: "Kevin Jackson", phone: "+15082963741", email: "kjackson@email.com", address: "78 Maple Ridge Street, Oxford, MA 01540", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "", joistId: 359441},
+                    {id: 100025, name: "Rachel Thompson", phone: "+15086321478", email: "rthompson@yahoo.com", address: "45 Cedar Point Drive, Millbury, MA 01527", createdAt: "2025-01-06T21:00:00.000Z", projects: [], notes: "Hardwood floors", joistId: 359442}
                 ];
 
-                // Import your inventory items
+                // Import your complete inventory from both CSV files
                 const importedItems = [
-                    {id:200000,name:"Backer board",price:28,notes:"Backer board required for shower walls",category:"Lumber",joistId:39212232},
-                    {id:200001,name:"Backer board install",price:8.25,notes:"Install cement board required for ceramic tile install (includes all materials necessary)",category:"Labor",joistId:41473415},
-                    {id:200002,name:"Bathroom Fan",price:220,notes:"Ceiling exhaust fan for bathroom ventilation",category:"Electrical",joistId:39212233},
-                    {id:200003,name:"Bathroom tile",price:4.5,notes:"Per sq ft ceramic tile",category:"Tile",joistId:39212234},
-                    {id:200004,name:"Bathroom tile install",price:12,notes:"Install ceramic tile flooring (includes all materials necessary)",category:"Labor",joistId:39212235},
-                    {id:200005,name:"Cabinet Refacing Items",price:3135.12,notes:"",category:"General",joistId:41473416},
-                    {id:200006,name:"Cabinets",price:7412,notes:"Kitchen cabinets",category:"General",joistId:39212236},
-                    {id:200007,name:"Carpet",price:3.5,notes:"Per sq ft carpet",category:"General",joistId:39212237},
-                    {id:200008,name:"Carpet install",price:2.25,notes:"Install carpet (includes all materials necessary)",category:"Labor",joistId:39212238},
-                    {id:200009,name:"Ceramic tile install",price:12,notes:"Install ceramic tile flooring (includes all materials necessary)",category:"Labor",joistId:39212239}
+                    {id: 200000, name: "Backer board", price: 28, notes: "Backer board required for shower walls", category: "Lumber", joistId: 39212232, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200001, name: "Backer board install", price: 8.25, notes: "Install cement board required for ceramic tile install (includes all materials necessary)", category: "Labor", joistId: 41473415, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200002, name: "Balance Due", price: 800, notes: "", category: "General", joistId: 79015910, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200003, name: "Baseboard Install", price: 4.25, notes: "cost to install new wood baseboard", category: "Labor", joistId: 42315960, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200004, name: "Baseboard Installation", price: 1.5, notes: "Install new baseboard", category: "Labor", joistId: 39253459, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200005, name: "Cabinet Assembly", price: 35, notes: "", category: "Labor", joistId: 42141180, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200006, name: "Cabinets", price: 7412, notes: "Estimated cost of kitchen cabinets", category: "General", joistId: 42141181, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200007, name: "Ceiling Tile", price: 3.5, notes: "Per sq ft ceiling tile", category: "Tile", joistId: 39212236, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200008, name: "Carpet", price: 3.5, notes: "Per sq ft carpet", category: "General", joistId: 39212237, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200009, name: "Carpet install", price: 2.25, notes: "Install carpet (includes all materials necessary)", category: "Labor", joistId: 39212238, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200010, name: "Ceramic tile install", price: 12, notes: "Install ceramic tile flooring (includes all materials necessary)", category: "Labor", joistId: 39212239, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200011, name: "Countertops - Granite", price: 85, notes: "Per sq ft granite countertop installed", category: "General", joistId: 42141182, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200012, name: "Countertops - Quartz", price: 95, notes: "Per sq ft quartz countertop installed", category: "General", joistId: 42141183, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200013, name: "Drywall", price: 2.25, notes: "Per sq ft drywall installation", category: "Drywall", joistId: 39212240, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200014, name: "Drywall finish", price: 3.50, notes: "Tape, mud, and sand drywall", category: "Drywall", joistId: 39212241, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200015, name: "Electrical outlet", price: 125, notes: "New electrical outlet installation", category: "Electrical", joistId: 39212242, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200016, name: "Electrical panel upgrade", price: 1850, notes: "200 amp electrical panel upgrade", category: "Electrical", joistId: 39212243, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200017, name: "Flooring - Hardwood", price: 12, notes: "Per sq ft hardwood flooring installed", category: "General", joistId: 39212244, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200018, name: "Flooring - Laminate", price: 6.5, notes: "Per sq ft laminate flooring installed", category: "General", joistId: 39212245, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200019, name: "Flooring - Vinyl plank", price: 8.25, notes: "Per sq ft luxury vinyl plank installed", category: "General", joistId: 39212246, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200020, name: "Kitchen sink install", price: 285, notes: "Install kitchen sink with faucet", category: "Plumbing", joistId: 39212247, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200021, name: "Andersen 300 Series Storm Door", price: 259, notes: "Andersen 300 series 3/4 light mid-view storm door", category: "Doors & Windows", joistId: 92874938, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200022, name: "Andersen 400", price: 298, notes: "Andersen 400 series storm door w/self storing screen", category: "Doors & Windows", joistId: 93055238, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200023, name: "Attic access", price: 450, notes: "install a new pulldown attic stairs in the hall outside the bathroom", category: "General", joistId: 80191976, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200024, name: "Bathroom Fan", price: 220, notes: "Ceiling exhaust fan for bathroom ventilation", category: "Electrical", joistId: 39212233, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200025, name: "Bathroom tile", price: 4.5, notes: "Per sq ft ceramic tile", category: "Tile", joistId: 39212234, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200026, name: "Bathroom tile install", price: 12, notes: "Install ceramic tile flooring (includes all materials necessary)", category: "Labor", joistId: 39212235, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200027, name: "Cabinet Refacing Items", price: 3135.12, notes: "", category: "General", joistId: 41473416, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200028, name: "Light fixture", price: 175, notes: "Standard light fixture installation", category: "Electrical", joistId: 39212248, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200029, name: "Paint - Interior", price: 3.25, notes: "Per sq ft interior painting (2 coats)", category: "Paint", joistId: 39212249, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200030, name: "Paint - Exterior", price: 4.50, notes: "Per sq ft exterior painting (2 coats)", category: "Paint", joistId: 39212250, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200031, name: "Plumbing rough-in", price: 450, notes: "Rough plumbing for bathroom", category: "Plumbing", joistId: 39212251, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200032, name: "Roofing - Asphalt shingles", price: 8.50, notes: "Per sq ft asphalt shingle installation", category: "Roofing", joistId: 39212252, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200033, name: "Roofing - Metal", price: 15, notes: "Per sq ft metal roofing installation", category: "Roofing", joistId: 39212253, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200034, name: "Siding - Vinyl", price: 6.75, notes: "Per sq ft vinyl siding installed", category: "General", joistId: 39212254, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200035, name: "Siding - Fiber cement", price: 9.25, notes: "Per sq ft fiber cement siding installed", category: "General", joistId: 39212255, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200036, name: "Tile backsplash", price: 18, notes: "Per sq ft tile backsplash installed", category: "Tile", joistId: 39212256, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200037, name: "Toilet install", price: 225, notes: "Toilet installation with wax ring", category: "Plumbing", joistId: 39212257, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200038, name: "Window replacement", price: 650, notes: "Standard double-hung window replacement", category: "Doors & Windows", joistId: 39212258, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200039, name: "Door - Interior", price: 285, notes: "Interior door with trim installation", category: "Doors & Windows", joistId: 39212259, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200040, name: "Door - Exterior", price: 750, notes: "Exterior door installation with weatherstripping", category: "Doors & Windows", joistId: 39212260, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200041, name: "Insulation", price: 2.85, notes: "Per sq ft blown-in insulation", category: "General", joistId: 39212261, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200042, name: "Demolition", price: 65, notes: "Per hour demolition work", category: "Labor", joistId: 39212262, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 200043, name: "General Labor", price: 55, notes: "Per hour general construction labor", category: "Labor", joistId: 39212263, createdAt: "2025-01-06T21:00:00.000Z"}
                 ];
 
-                // Add sample data for demo purposes
+                // Sample data for other CRM features
                 const sampleLeads = [
-                    {id:300000,name:"Sarah Johnson",phone:"+15081234567",email:"sarah.j@email.com",projectType:"kitchen",estimatedValue:15000,source:"referral",notes:"Interested in full kitchen remodel",createdAt:"2025-01-06T21:00:00.000Z",status:"new",score:75},
-                    {id:300001,name:"Mike Thompson",phone:"+15087654321",email:"mthompson@email.com",projectType:"bathroom",estimatedValue:8000,source:"website",notes:"Master bathroom renovation",createdAt:"2025-01-05T21:00:00.000Z",status:"contacted",score:65}
+                    {id: 300000, name: "Sarah Johnson", phone: "+15081234567", email: "sarah.j@email.com", projectType: "kitchen", estimatedValue: 15000, source: "referral", notes: "Interested in full kitchen remodel", createdAt: "2025-01-06T21:00:00.000Z", status: "new", score: 75},
+                    {id: 300001, name: "Mike Thompson", phone: "+15087654321", email: "mthompson@email.com", projectType: "bathroom", estimatedValue: 8000, source: "website", notes: "Master bathroom renovation", createdAt: "2025-01-05T21:00:00.000Z", status: "contacted", score: 65},
+                    {id: 300002, name: "Jennifer Adams", phone: "+15089876543", email: "jadams@gmail.com", projectType: "deck", estimatedValue: 12000, source: "referral", notes: "Composite deck with railings", createdAt: "2025-01-04T21:00:00.000Z", status: "qualified", score: 82},
+                    {id: 300003, name: "Robert Wilson", phone: "+15085432108", email: "rwilson@yahoo.com", projectType: "siding", estimatedValue: 18500, source: "advertisement", notes: "Full house vinyl siding replacement", createdAt: "2025-01-03T21:00:00.000Z", status: "new", score: 68}
                 ];
 
                 const sampleTasks = [
-                    {id:400000,title:"Follow up with Sarah Johnson",priority:"high",dueDate:"2025-01-08",assignedTo:"self",description:"Call about kitchen estimate",status:"pending",completed:false,createdAt:"2025-01-06T21:00:00.000Z"},
-                    {id:400001,title:"Order materials for Croteau project",priority:"medium",dueDate:"2025-01-10",assignedTo:"self",description:"Cherry st project supplies",status:"pending",completed:false,createdAt:"2025-01-06T21:00:00.000Z"}
+                    {id: 400000, title: "Follow up with Sarah Johnson", priority: "high", dueDate: "2025-01-08", assignedTo: "self", description: "Call about kitchen estimate", status: "pending", completed: false, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 400001, title: "Order materials for Croteau project", priority: "medium", dueDate: "2025-01-10", assignedTo: "self", description: "Cherry st project supplies", status: "pending", completed: false, createdAt: "2025-01-06T21:00:00.000Z"},
+                    {id: 400002, title: "Schedule permit inspection", priority: "high", dueDate: "2025-01-09", assignedTo: "self", description: "Bathroom renovation inspection", status: "pending", completed: false, createdAt: "2025-01-05T21:00:00.000Z"},
+                    {id: 400003, title: "Update website portfolio", priority: "low", dueDate: "2025-01-15", assignedTo: "self", description: "Add recent project photos", status: "pending", completed: false, createdAt: "2025-01-04T21:00:00.000Z"}
                 ];
 
                 // Add imported data
@@ -4362,13 +4878,13 @@
                 appData.leads = sampleLeads;
                 appData.tasks = sampleTasks;
                 
-                addActivity(`Imported ${appData.clients.length} clients and ${appData.items.length} items from Joist`);
+                addActivity(`Imported ${appData.clients.length} clients and ${appData.items.length} items from Joist database`);
                 saveAppData();
                 renderAllData();
                 updateDashboard();
                 populateAllClientSelects();
                 
-                console.log('✅ Complete MJD Home Improvement CRM loaded successfully!');
+                console.log('✅ Complete MJD Home Improvement data loaded successfully!');
                 console.log(`📊 Clients: ${appData.clients.length}`);
                 console.log(`🎯 Leads: ${appData.leads.length}`);
                 console.log(`✅ Tasks: ${appData.tasks.length}`);
