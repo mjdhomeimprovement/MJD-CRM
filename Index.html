@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MJD CRM">
+    <meta name="theme-color" content="#1e40af">
+    <title>MJD Home Improvement CRM</title>
+    
+    <!-- Embedded Manifest -->
+    <script>
+        const manifestData = {
+            "name": "MJD Home Improvement CRM",
+            "short_name": "MJD CRM",
+            "description": "Complete contractor CRM for MJD Home Improvement",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#1e40af",
+            "orientation": "portrait",
+            "icons": [
+                {
+                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMzIiIGZpbGw9IiMxZTQwYWYiLz4KPHBhdGggZD0iTTQ4IDEyMGw0OC00OCA0OCA0OHYzMmgtOTZ2LTMyeiIgZmlsbD0iI2ZmZmZmZiIvPgo8cGF0aCBkPSJNNzIgMTM2aDQ4djE2SDcydi0xNnoiIGZpbGw9IiMxZTQwYWYiLz4KPHBhdGggZD0iTTk2IDQwdjMyaDE2VjQwSDk2eiIgZmlsbD0iI2ZmZmZmZiIvPgo8L3N2Zz4K",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                },
+                {
+                    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iODQiIGZpbGw9IiMxZTQwYWYiLz4KPHBhdGggZD0iTTEyOCAzMjBsMTI4LTEyOCAxMjggMTI4djg0aC0yNTZ2LTg0eiIgZmlsbD0iI2ZmZmZmZiIvPgo8cGF0aCBkPSJNMTkyIDM2NGgxMjh2NDJIMTkydi00MnoiIGZpbGw9IiMxZTQwYWYiLz4KPHBhdGggZD0iTTI1NiAxMDZ2ODRoNDJWMTA2aC00MnoiIGZpbGw9IiNmZmZmZmYiLz4KPC9zdmc+Cg==",
+                    "sizes": "512x512",
+                    "type": "image/svg+xml"
+                }
+            ]
+        };
+        
+        const blob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(blob);
+        document.addEventListener('DOMContentLoaded', () => {
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestURL;
+            document.head.appendChild(link);
+        });
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 20px 16px 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tab {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active {
+            color: #1e40af;
+            border-bottom-color: #1e40af;
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .card-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stats-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: #f1f5f9;
+            border-radius: 6px;
+            height: 8px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+            transition: width 0.3s ease;
+        }
+
+        .client-card {
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .client-name {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .client-info {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .lead-score {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .lead-score-high {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .lead-score-medium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .lead-score-low {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            flex: 1;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #64748b;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .cost-breakdown {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .cost-total {
+            font-weight: 600;
+            font-size: 16px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .offline-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #ef4444;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>MJD Home Improvement CRM</h1>
+            <p>CSL: CSFA-106473 | HIC: 198487 | (508)-902-7529</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('dashboard')">Dashboard</button>
+            <button class="nav-tab" onclick="switchTab('clients')">Clients</button>
+            <button class="nav-tab" onclick="switchTab('leads')">Leads</button>
+            <button class="nav-tab" onclick="switchTab('projects')">Projects</button>
+            <button class="nav-tab" onclick="switchTab('invoices')">Invoices</button>
+            <button class="nav-tab" onclick="switchTab('calculator')">Calculator</button>
+            <button class="nav-tab" onclick="switchTab('team')">Team</button>
+            <button class="nav-tab" onclick="switchTab('photos')">Photos</button>
+            <button class="nav-tab" onclick="switchTab('inventory')">Inventory</button>
+            <button class="nav-tab" onclick="switchTab('analytics')">Analytics</button>
+        </nav>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="grid grid-2">
+                <div class="stats-card">
+                    <div class="stats-number" id="totalClients">0</div>
+                    <div class="stats-label">Total Clients</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="activeProjects">0</div>
+                    <div class="stats-label">Active Projects</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="monthlyRevenue">$0</div>
+                    <div class="stats-label">Monthly Revenue</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="totalItems">0</div>
+                    <div class="stats-label">Inventory Items</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Activity</h3>
+                </div>
+                <div class="card-content" id="recentActivity">
+                    <p style="color: #64748b; text-align: center;">No recent activity</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clients Tab -->
+        <div id="clients" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Client Management</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="openClientModal()">Add New Client</button>
+                    <div id="clientsList" style="margin-top: 16px;">
+                        <!-- Clients will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div id="inventory" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Inventory Management</h3>
+                </div>
+                <div class="card-content">
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" class="form-input" id="inventorySearch" placeholder="Search items..." onkeyup="searchInventory()" style="margin-bottom: 12px;">
+                        <select class="form-select" id="categoryFilter" onchange="filterInventory()" style="margin-bottom: 12px;">
+                            <option value="">All Categories</option>
+                            <option value="Labor">Labor</option>
+                            <option value="Lumber">Lumber</option>
+                            <option value="Tile">Tile</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Drywall">Drywall</option>
+                            <option value="Doors & Windows">Doors & Windows</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="openItemModal()">Add New Item</button>
+                    <div id="inventoryList" style="margin-top: 16px;">
+                        <!-- Inventory items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leads Tab -->
+        <div id="leads" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Lead Management</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="openLeadModal()">Add New Lead</button>
+                    <div id="leadsList" style="margin-top: 16px;">
+                        <!-- Leads will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Project Tracking</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="openProjectModal()">Create New Project</button>
+                    <div id="projectsList" style="margin-top: 16px;">
+                        <!-- Projects will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoices Tab -->
+        <div id="invoices" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Invoice Management</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="openInvoiceModal()">Create Invoice</button>
+                    <div id="invoicesList" style="margin-top: 16px;">
+                        <!-- Invoices will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Tab -->
+        <div id="calculator" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Material Calculator</h3>
+                </div>
+                <div class="card-content">
+                    <div style="background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                        <div class="form-group">
+                            <label class="form-label">Project Type</label>
+                            <select class="form-select" id="projectType" onchange="updateCalculator()">
+                                <option value="deck">Deck</option>
+                                <option value="kitchen">Kitchen Remodel</option>
+                                <option value="bathroom">Bathroom Remodel</option>
+                                <option value="siding">Siding</option>
+                                <option value="roofing">Roofing</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Material Grade</label>
+                            <select class="form-select" id="materialGrade" onchange="updateCalculator()">
+                                <option value="standard">Standard</option>
+                                <option value="premium">Premium</option>
+                                <option value="luxury">Luxury</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Square Footage</label>
+                            <input type="number" class="form-input" id="squareFootage" onchange="updateCalculator()" placeholder="Enter sq ft">
+                        </div>
+                        
+                        <div class="cost-breakdown" id="costBreakdown">
+                            <p style="color: #64748b;">Enter square footage to see cost breakdown</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Tab -->
+        <div id="team" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Team Management</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="openTeamModal()">Add Team Member</button>
+                    <div id="teamList" style="margin-top: 16px;">
+                        <!-- Team members will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photos Tab -->
+        <div id="photos" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Photo Management</h3>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="document.getElementById('photoUpload').click()">Upload Photos</button>
+                    <input type="file" id="photoUpload" style="display: none;" accept="image/*" multiple onchange="handlePhotoUpload(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 16px;" id="photoGrid">
+                        <div style="display: flex; align-items: center; justify-content: center; height: 120px; color: #64748b; font-size: 12px; text-align: center; background: #f1f5f9; border-radius: 8px;">No photos uploaded yet</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Business Analytics</h3>
+                </div>
+                <div class="card-content">
+                    <div style="height: 200px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; margin-bottom: 16px;">
+                        Revenue Chart (Demo)
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <div class="card-content">
+                                <h4>Conversion Rate</h4>
+                                <div class="stats-number">24%</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 24%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <h4>Average Project Value</h4>
+                                <div class="stats-number">$8,450</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAB Button -->
+        <button class="fab" onclick="showQuickActions()">+</button>
+    </div>
+
+    <!-- Client Modal -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Client</h3>
+                <button class="modal-close" onclick="closeModal('clientModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="clientForm" onsubmit="saveClient(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" name="address" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="offline-indicator" id="offlineIndicator">
+        Offline Mode - Data will sync when connection is restored
+    </div>
+
+    <script>
+        // App Data
+        let appData = {
+            clients: [],
+            leads: [],
+            projects: [],
+            invoices: [],
+            teamMembers: [],
+            photos: [],
+            activities: [],
+            items: []
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAppData();
+            updateDashboard();
+            renderAllData();
+            registerServiceWorker();
+            setupOfflineDetection();
+            
+            // Load imported data after a delay
+            setTimeout(loadRealData, 1000);
+        });
+
+        // Service Worker Registration
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'mjd-crm-v1';
+                    const urlsToCache = ['/'];
+                    
+                    self.addEventListener('install', (event) => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', (event) => {
+                        event.respondWith(
+                            caches.match(event.request).then((response) => {
+                                return response || fetch(event.request);
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swURL);
+            }
+        }
+
+        // Offline Detection
+        function setupOfflineDetection() {
+            function updateOnlineStatus() {
+                const indicator = document.getElementById('offlineIndicator');
+                if (navigator.onLine) {
+                    indicator.style.display = 'none';
+                } else {
+                    indicator.style.display = 'block';
+                }
+            }
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+        }
+
+        // Local Storage Management
+        function saveAppData() {
+            try {
+                localStorage.setItem('mjdCrmData', JSON.stringify(appData));
+            } catch (e) {
+                console.error('Failed to save data:', e);
+            }
+        }
+
+        function loadAppData() {
+            try {
+                const saved = localStorage.getItem('mjdCrmData');
+                if (saved) {
+                    appData = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+            }
+        }
+
+        // Navigation
+        function switchTab(tabName) {
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Dashboard Updates
+        function updateDashboard() {
+            document.getElementById('totalClients').textContent = appData.clients.length;
+            document.getElementById('activeProjects').textContent = appData.projects.filter(p => p.status !== 'completed').length;
+            document.getElementById('monthlyRevenue').textContent = '$' + calculateMonthlyRevenue().toLocaleString();
+            document.getElementById('totalItems').textContent = (appData.items || []).length;
+        }
+
+        function calculateMonthlyRevenue() {
+            const thisMonth = new Date().getMonth();
+            const thisYear = new Date().getFullYear();
+            
+            return appData.invoices
+                .filter(invoice => {
+                    const invoiceDate = new Date(invoice.date);
+                    return invoiceDate.getMonth() === thisMonth && 
+                           invoiceDate.getFullYear() === thisYear &&
+                           invoice.status === 'paid';
+                })
+                .reduce((total, invoice) => total + parseFloat(invoice.amount), 0);
+        }
+
+        // Client Management
+        function openClientModal() {
+            document.getElementById('clientModal').classList.add('active');
+        }
+
+        function saveClient(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const client = {
+                id: Date.now(),
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                address: formData.get('address'),
+                createdAt: new Date().toISOString(),
+                projects: []
+            };
+            
+            appData.clients.push(client);
+            addActivity(`New client added: ${client.name}`);
+            saveAppData();
+            renderClients();
+            updateDashboard();
+            closeModal('clientModal');
+            event.target.reset();
+        }
+
+        function renderClients() {
+            const container = document.getElementById('clientsList');
+            if (appData.clients.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No clients yet</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.clients.map(client => `
+                <div class="client-card">
+                    <div class="client-name">${client.name}</div>
+                    <div class="client-info">📞 ${client.phone}</div>
+                    <div class="client-info">✉️ ${client.email}</div>
+                    <div class="client-info">📍 ${client.address}</div>
+                    <div style="margin-top: 8px;">
+                        <button class="btn btn-small btn-secondary" onclick="viewClientProjects(${client.id})">View Projects</button>
+                        <button class="btn btn-small btn-primary" onclick="createInvoiceForClient(${client.id})">Create Invoice</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Inventory Management
+        function renderInventory() {
+            const container = document.getElementById('inventoryList');
+            if (!appData.items || appData.items.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No inventory items yet</p>';
+                return;
+            }
+            
+            let items = appData.items;
+            const search = document.getElementById('inventorySearch')?.value?.toLowerCase() || '';
+            const category = document.getElementById('categoryFilter')?.value || '';
+            
+            // Apply filters
+            if (search) {
+                items = items.filter(item => 
+                    item.name.toLowerCase().includes(search) || 
+                    (item.notes && item.notes.toLowerCase().includes(search))
+                );
+            }
+            if (category) {
+                items = items.filter(item => item.category === category);
+            }
+            
+            container.innerHTML = items.map(item => `
+                <div class="client-card">
+                    <div class="client-name">${item.name}</div>
+                    <div class="client-info">💰 $${item.price.toFixed(2)}</div>
+                    <div class="client-info">📂 ${item.category}</div>
+                    ${item.notes ? `<div class="client-info">📝 ${item.notes}</div>` : ''}
+                    <div style="margin-top: 8px;">
+                        <button class="btn btn-small btn-secondary" onclick="editItem(${item.id})">Edit</button>
+                        <button class="btn btn-small btn-primary" onclick="addItemToEstimate(${item.id})">Add to Estimate</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchInventory() {
+            renderInventory();
+        }
+
+        function filterInventory() {
+            renderInventory();
+        }
+
+        function openItemModal() {
+            alert('Item modal would open here - modal code needs to be added for full functionality');
+        }
+
+        function editItem(itemId) {
+            const item = appData.items.find(i => i.id === itemId);
+            if (item) {
+                const newPrice = prompt(`Edit price for ${item.name}:\nCurrent: $${item.price}`, item.price);
+                if (newPrice !== null && !isNaN(newPrice)) {
+                    item.price = parseFloat(newPrice);
+                    saveAppData();
+                    renderInventory();
+                    addActivity(`Updated item price: ${item.name} - $${item.price}`);
+                }
+            }
+        }
+
+        function addItemToEstimate(itemId) {
+            const item = appData.items.find(i => i.id === itemId);
+            if (item) {
+                alert(`Added ${item.name} ($${item.price}) to estimate.\n\nFull estimate builder coming in next update!`);
+                addActivity(`Added ${item.name} to estimate`);
+            }
+        }
+
+        // Utility Functions
+        function addActivity(description) {
+            appData.activities.unshift({
+                id: Date.now(),
+                description,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 50 activities
+            if (appData.activities.length > 50) {
+                appData.activities = appData.activities.slice(0, 50);
+            }
+            
+            updateRecentActivity();
+        }
+
+        function updateRecentActivity() {
+            const container = document.getElementById('recentActivity');
+            if (appData.activities.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No recent activity</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.activities.slice(0, 5).map(activity => `
+                <div style="margin-bottom: 12px; padding: 8px; border-radius: 8px; background: #f8fafc;">
+                    <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">${new Date(activity.timestamp).toLocaleString()}</div>
+                    <div>${activity.description}</div>
+                </div>
+            `).join('');
+        }
+
+        // Lead Management
+        function openLeadModal() {
+            alert('Lead modal would open here - modal code needs to be added');
+        }
+
+        function renderLeads() {
+            const container = document.getElementById('leadsList');
+            if (appData.leads.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No leads yet</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.leads.map(lead => `
+                <div class="client-card">
+                    <div class="client-name">${lead.name}</div>
+                    <div class="client-info">📞 ${lead.phone}</div>
+                    <div class="client-info">🏗️ ${lead.projectType || 'N/A'}</div>
+                    <div class="client-info">💰 ${(lead.estimatedValue || 0).toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+
+        // Project Management
+        function openProjectModal() {
+            alert('Project modal would open here - modal code needs to be added');
+        }
+
+        function renderProjects() {
+            const container = document.getElementById('projectsList');
+            if (appData.projects.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No projects yet</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.projects.map(project => `
+                <div class="client-card">
+                    <div class="client-name">${project.name}</div>
+                    <div class="client-info">🏗️ ${project.type}</div>
+                    <div class="client-info">💰 ${(project.budget || 0).toLocaleString()}</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${project.progress || 0}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Invoice Management
+        function openInvoiceModal() {
+            alert('Invoice modal would open here - modal code needs to be added');
+        }
+
+        function renderInvoices() {
+            const container = document.getElementById('invoicesList');
+            if (appData.invoices.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No invoices yet</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.invoices.map(invoice => `
+                <div class="client-card">
+                    <div class="client-name">Invoice #${invoice.id}</div>
+                    <div class="client-info">💰 ${(invoice.amount || 0).toLocaleString()}</div>
+                    <div class="client-info">📅 Due: ${invoice.dueDate || 'N/A'}</div>
+                    <div class="client-info">Status: ${invoice.status || 'pending'}</div>
+                </div>
+            `).join('');
+        }
+
+        // Calculator Functions
+        function updateCalculator() {
+            const projectType = document.getElementById('projectType').value;
+            const materialGrade = document.getElementById('materialGrade').value;
+            const sqft = parseFloat(document.getElementById('squareFootage').value) || 0;
+            
+            if (sqft === 0) {
+                document.getElementById('costBreakdown').innerHTML = '<p style="color: #64748b;">Enter square footage to see cost breakdown</p>';
+                return;
+            }
+            
+            const pricing = {
+                deck: {
+                    standard: { material: 15, labor: 25 },
+                    premium: { material: 25, labor: 35 },
+                    luxury: { material: 45, labor: 50 }
+                },
+                kitchen: {
+                    standard: { material: 80, labor: 60 },
+                    premium: { material: 120, labor: 80 },
+                    luxury: { material: 200, labor: 120 }
+                },
+                bathroom: {
+                    standard: { material: 60, labor: 50 },
+                    premium: { material: 90, labor: 70 },
+                    luxury: { material: 150, labor: 100 }
+                },
+                siding: {
+                    standard: { material: 8, labor: 12 },
+                    premium: { material: 15, labor: 18 },
+                    luxury: { material: 25, labor: 25 }
+                },
+                roofing: {
+                    standard: { material: 4, labor: 8 },
+                    premium: { material: 8, labor: 12 },
+                    luxury: { material: 15, labor: 20 }
+                }
+            };
+            
+            const rates = pricing[projectType][materialGrade];
+            const materialCost = sqft * rates.material;
+            const laborCost = sqft * rates.labor;
+            const subtotal = materialCost + laborCost;
+            const tax = subtotal * 0.0625; // MA tax rate
+            const total = subtotal + tax;
+            
+            document.getElementById('costBreakdown').innerHTML = `
+                <h4>Cost Breakdown</h4>
+                <div class="cost-item">
+                    <span>Materials (${sqft} sq ft × ${rates.material})</span>
+                    <strong>${materialCost.toLocaleString()}</strong>
+                </div>
+                <div class="cost-item">
+                    <span>Labor (${sqft} sq ft × ${rates.labor})</span>
+                    <strong>${laborCost.toLocaleString()}</strong>
+                </div>
+                <div class="cost-item">
+                    <span>Subtotal</span>
+                    <strong>${subtotal.toLocaleString()}</strong>
+                </div>
+                <div class="cost-item">
+                    <span>Tax (6.25%)</span>
+                    <strong>${tax.toLocaleString()}</strong>
+                </div>
+                <div class="cost-item cost-total">
+                    <span>Total</span>
+                    <strong>${total.toLocaleString()}</strong>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="createEstimateFromCalculation()">Create Estimate</button>
+            `;
+        }
+
+        function createEstimateFromCalculation() {
+            alert('Estimate creation feature coming soon! For now, you can copy these numbers to create a manual estimate.');
+        }
+
+        // Team Management
+        function openTeamModal() {
+            alert('Team modal would open here - modal code needs to be added');
+        }
+
+        function renderTeamMembers() {
+            const container = document.getElementById('teamList');
+            if (appData.teamMembers.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No team members yet</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.teamMembers.map(member => `
+                <div style="display: flex; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 12px;">
+                        ${member.name.charAt(0)}
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; color: #1e293b;">${member.name}</div>
+                        <div style="font-size: 12px; color: #64748b;">${member.role} • ${member.rate || 0}/hr</div>
+                        <div style="font-size: 12px; color: #64748b;">${member.skills || 'N/A'}</div>
+                    </div>
+                    <span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 500; background: #dcfce7; color: #166534;">
+                        ${member.status || 'available'}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        // Photo Management
+        function handlePhotoUpload(event) {
+            const files = Array.from(event.target.files);
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const photo = {
+                            id: Date.now() + Math.random(),
+                            url: e.target.result,
+                            name: file.name,
+                            uploadDate: new Date().toISOString(),
+                            size: file.size,
+                            type: file.type
+                        };
+                        appData.photos.push(photo);
+                        saveAppData();
+                        renderPhotos();
+                        addActivity(`Photo uploaded: ${photo.name}`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function renderPhotos() {
+            const container = document.getElementById('photoGrid');
+            if (appData.photos.length === 0) {
+                container.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 120px; color: #64748b; font-size: 12px; text-align: center; background: #f1f5f9; border-radius: 8px;">No photos uploaded yet</div>';
+                return;
+            }
+            
+            container.innerHTML = appData.photos.map(photo => `
+                <div style="position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #f1f5f9; cursor: pointer;" onclick="viewPhotoDetails(${photo.id})">
+                    <img src="${photo.url}" alt="${photo.name}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div style="position: absolute; bottom: 4px; left: 4px; right: 4px; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px 4px; border-radius: 4px;">
+                        ${photo.name.length > 15 ? photo.name.substring(0, 12) + '...' : photo.name}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function viewPhotoDetails(photoId) {
+            const photo = appData.photos.find(p => p.id === photoId);
+            if (photo) {
+                alert(`Photo: ${photo.name}\nUploaded: ${new Date(photo.uploadDate).toLocaleDateString()}\nSize: ${(photo.size / 1024).toFixed(1)} KB`);
+            }
+        }
+
+        // Modal Functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Quick Actions
+        function showQuickActions() {
+            const actions = [
+                'Add New Client',
+                'Add New Lead', 
+                'Create Project',
+                'Create Invoice',
+                'Upload Photos'
+            ];
+            
+            const choice = prompt('Quick Actions:\n\n' + actions.map((action, i) => `${i + 1}. ${action}`).join('\n') + '\n\nEnter number (1-5):');
+            
+            switch(choice) {
+                case '1':
+                    openClientModal();
+                    break;
+                case '2':
+                    alert('Lead modal coming soon');
+                    break;
+                case '3':
+                    alert('Project modal coming soon');
+                    break;
+                case '4':
+                    alert('Invoice modal coming soon');
+                    break;
+                case '5':
+                    alert('Photo upload coming soon');
+                    break;
+            }
+        }
+
+        // Import your real data
+        function loadRealData() {
+            if (appData.clients.length === 0) {
+                // Import your actual clients from Joist
+                const importedClients = [
+                    {id:100000,name:"Priscilla Nelson",phone:"",email:"",address:"108 Federal Hill Rd, Oxford, Ma 1540",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"Flooring",joistId:362198},
+                    {id:100001,name:"Robin Robinson",phone:"+17746962833",email:"",address:"55 Henshaw st, Worcester, Ma",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359424},
+                    {id:100002,name:"Alex Cruz",phone:"+17742301313",email:"",address:"4 Stephen dr, Webster, MA 1570",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359423},
+                    {id:100003,name:"Kevin Croteau",phone:"+15087526655",email:"",address:"91 Cherry st, Millbury, MA 1527",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359422},
+                    {id:100004,name:"Victoria Mcnamara",phone:"+17742301313",email:"",address:"4 Stephen dr, Webster, MA 1570",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359421},
+                    {id:100005,name:"Robert & Diane Comeau",phone:"+15087347055",email:"",address:"22 Highcrest Circle, Shrewsbury, MA 1545",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359419},
+                    {id:100006,name:"Wanda Harris",phone:"+15085949006",email:"",address:"15 Hemlock dr, Millbury, Ma 1527",createdAt:"2025-01-06T21:00:00.000Z",projects:[],notes:"",joistId:359418}
+                ];
+
+                // Import your inventory items
+                const importedItems = [
+                    {id:200000,name:"Backer board",price:28,notes:"Backer board required for shower walls",category:"Lumber",joistId:39212232},
+                    {id:200001,name:"Backer board install",price:8.25,notes:"Install cement board required for ceramic tile install (includes all materials necessary)",category:"Labor",joistId:41473415},
+                    {id:200002,name:"Bathroom Fan",price:220,notes:"Ceiling exhaust fan for bathroom ventilation",category:"Electrical",joistId:39212233},
+                    {id:200003,name:"Bathroom tile",price:4.5,notes:"Per sq ft ceramic tile",category:"Tile",joistId:39212234},
+                    {id:200004,name:"Bathroom tile install",price:12,notes:"Install ceramic tile flooring (includes all materials necessary)",category:"Labor",joistId:39212235},
+                    {id:200005,name:"Cabinet Refacing Items",price:3135.12,notes:"",category:"General",joistId:41473416},
+                    {id:200006,name:"Cabinets",price:7412,notes:"Kitchen cabinets",category:"General",joistId:39212236},
+                    {id:200007,name:"Carpet",price:3.5,notes:"Per sq ft carpet",category:"General",joistId:39212237},
+                    {id:200008,name:"Carpet install",price:2.25,notes:"Install carpet (includes all materials necessary)",category:"Labor",joistId:39212238},
+                    {id:200009,name:"Ceramic tile install",price:12,notes:"Install ceramic tile flooring (includes all materials necessary)",category:"Labor",joistId:39212239}
+                ];
+
+                // Add imported data
+                appData.clients = importedClients;
+                appData.items = importedItems;
+                
+                addActivity(`Imported ${appData.clients.length} clients and ${appData.items.length} items from Joist`);
+                saveAppData();
+                renderAllData();
+                updateDashboard();
+                
+                console.log('✅ Real MJD Home Improvement data loaded successfully!');
+                console.log(`📊 Clients: ${appData.clients.length}`);
+                console.log(`🔧 Items: ${appData.items.length}`);
+            }
+        }
+
+        // Placeholder functions to prevent errors
+        function viewClientProjects(clientId) {
+            alert('Project view feature coming soon');
+        }
+
+        function createInvoiceForClient(clientId) {
+            alert('Invoice creation feature coming soon');
+        }
+
+        // Auto-save functionality
+        setInterval(() => {
+            if (navigator.onLine) {
+                saveAppData();
+            }
+        }, 30000);
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        console.log('MJD Home Improvement CRM PWA loaded successfully!');
+    </script>
+</body>
+</html>
