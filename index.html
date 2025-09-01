@@ -139,6 +139,9 @@
             padding: 16px;
             border-bottom: 1px solid #e2e8f0;
             background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card-header h3 {
@@ -187,6 +190,17 @@
             background: white;
         }
 
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            resize: vertical;
+            min-height: 80px;
+        }
+
         .btn {
             padding: 12px 24px;
             border: none;
@@ -221,9 +235,23 @@
             color: white;
         }
 
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
         .btn-small {
             padding: 8px 16px;
             font-size: 12px;
+        }
+
+        .btn-full {
+            width: 100%;
         }
 
         .grid {
@@ -235,23 +263,44 @@
             grid-template-columns: 1fr 1fr;
         }
 
+        .grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
         .stats-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 20px;
             border-radius: 12px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: skewX(-15deg) translateX(50%);
         }
 
         .stats-number {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
         }
 
         .stats-label {
             font-size: 12px;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .progress-bar {
@@ -274,6 +323,13 @@
             margin-bottom: 12px;
             background: #f8fafc;
             border-radius: 8px;
+            position: relative;
+        }
+
+        .client-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            transition: all 0.2s;
         }
 
         .client-name {
@@ -307,6 +363,28 @@
 
         .lead-score-low {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-new {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-in-progress {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
         }
 
         .modal {
@@ -420,10 +498,232 @@
             z-index: 100;
         }
 
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1002;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #10b981;
+        }
+
+        .notification.error {
+            background: #ef4444;
+        }
+
+        .notification.warning {
+            background: #f59e0b;
+        }
+
+        .appointment-card {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .time-slot {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            font-size: 12px;
+            margin: 4px 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-slot:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .time-slot.booked {
+            background: rgba(239, 68, 68, 0.3);
+            cursor: not-allowed;
+        }
+
+        .estimate-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .weather-widget {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
         @media (max-width: 768px) {
             .grid-2 {
                 grid-template-columns: 1fr;
             }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-bar input {
+            padding-left: 40px;
+        }
+
+        .search-bar::before {
+            content: '🔍';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-chip.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .task-checkbox {
+            margin-right: 12px;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-priority {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 12px;
+        }
+
+        .priority-high {
+            background: #ef4444;
+        }
+
+        .priority-medium {
+            background: #f59e0b;
+        }
+
+        .priority-low {
+            background: #10b981;
+        }
+
+        .expense-summary {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .expense-category {
+            text-align: center;
+        }
+
+        .expense-amount {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .expense-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
         }
     </style>
 </head>
@@ -440,15 +740,31 @@
             <button class="nav-tab" onclick="switchTab('leads')">Leads</button>
             <button class="nav-tab" onclick="switchTab('projects')">Projects</button>
             <button class="nav-tab" onclick="switchTab('invoices')">Invoices</button>
+            <button class="nav-tab" onclick="switchTab('estimates')">Estimates</button>
+            <button class="nav-tab" onclick="switchTab('scheduling')">Schedule</button>
+            <button class="nav-tab" onclick="switchTab('tasks')">Tasks</button>
+            <button class="nav-tab" onclick="switchTab('expenses')">Expenses</button>
             <button class="nav-tab" onclick="switchTab('calculator')">Calculator</button>
             <button class="nav-tab" onclick="switchTab('team')">Team</button>
             <button class="nav-tab" onclick="switchTab('photos')">Photos</button>
             <button class="nav-tab" onclick="switchTab('inventory')">Inventory</button>
+            <button class="nav-tab" onclick="switchTab('reports')">Reports</button>
             <button class="nav-tab" onclick="switchTab('analytics')">Analytics</button>
         </nav>
 
         <!-- Dashboard Tab -->
         <div id="dashboard" class="tab-content active">
+            <div class="weather-widget" id="weatherWidget">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                    <span style="font-size: 24px;">☀️</span>
+                    <div>
+                        <div style="font-weight: 600;">Worcester, MA</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Perfect weather for outdoor work</div>
+                    </div>
+                    <div style="font-size: 24px; font-weight: 700;">72°F</div>
+                </div>
+            </div>
+            
             <div class="grid grid-2">
                 <div class="stats-card">
                     <div class="stats-number" id="totalClients">0</div>
@@ -463,17 +779,44 @@
                     <div class="stats-label">Monthly Revenue</div>
                 </div>
                 <div class="stats-card">
-                    <div class="stats-number" id="totalItems">0</div>
-                    <div class="stats-label">Inventory Items</div>
+                    <div class="stats-number" id="pendingInvoices">0</div>
+                    <div class="stats-label">Pending Invoices</div>
                 </div>
             </div>
             
+            <div class="card">
+                <div class="card-header">
+                    <h3>Today's Schedule</h3>
+                    <button class="btn btn-small btn-primary" onclick="openScheduleModal()">Add Appointment</button>
+                </div>
+                <div class="card-content" id="todaysSchedule">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <h3>No appointments today</h3>
+                        <p>Your schedule is clear!</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h3>Recent Activity</h3>
                 </div>
                 <div class="card-content" id="recentActivity">
                     <p style="color: #64748b; text-align: center;">No recent activity</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Quick Tasks</h3>
+                </div>
+                <div class="card-content" id="quickTasks">
+                    <div class="btn-group">
+                        <button class="btn btn-primary btn-small" onclick="openClientModal()">Add Client</button>
+                        <button class="btn btn-secondary btn-small" onclick="openLeadModal()">Add Lead</button>
+                        <button class="btn btn-success btn-small" onclick="openInvoiceModal()">Create Invoice</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -483,9 +826,12 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Client Management</h3>
+                    <button class="btn btn-primary" onclick="openClientModal()">Add New Client</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="openClientModal()">Add New Client</button>
+                    <div class="search-bar">
+                        <input type="text" class="form-input" id="clientSearch" placeholder="Search clients..." onkeyup="searchClients()">
+                    </div>
                     <div id="clientsList" style="margin-top: 16px;">
                         <!-- Clients will be populated here -->
                     </div>
@@ -498,9 +844,15 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Lead Management</h3>
+                    <button class="btn btn-primary" onclick="openLeadModal()">Add New Lead</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="openLeadModal()">Add New Lead</button>
+                    <div class="filter-chips">
+                        <div class="filter-chip active" data-status="all" onclick="filterLeads('all')">All Leads</div>
+                        <div class="filter-chip" data-status="new" onclick="filterLeads('new')">New</div>
+                        <div class="filter-chip" data-status="contacted" onclick="filterLeads('contacted')">Contacted</div>
+                        <div class="filter-chip" data-status="qualified" onclick="filterLeads('qualified')">Qualified</div>
+                    </div>
                     <div id="leadsList" style="margin-top: 16px;">
                         <!-- Leads will be populated here -->
                     </div>
@@ -513,9 +865,15 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Project Tracking</h3>
+                    <button class="btn btn-primary" onclick="openProjectModal()">Create New Project</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="openProjectModal()">Create New Project</button>
+                    <div class="filter-chips">
+                        <div class="filter-chip active" data-status="all" onclick="filterProjects('all')">All Projects</div>
+                        <div class="filter-chip" data-status="planning" onclick="filterProjects('planning')">Planning</div>
+                        <div class="filter-chip" data-status="in_progress" onclick="filterProjects('in_progress')">In Progress</div>
+                        <div class="filter-chip" data-status="completed" onclick="filterProjects('completed')">Completed</div>
+                    </div>
                     <div id="projectsList" style="margin-top: 16px;">
                         <!-- Projects will be populated here -->
                     </div>
@@ -528,11 +886,105 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Invoice Management</h3>
+                    <button class="btn btn-primary" onclick="openInvoiceModal()">Create Invoice</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="openInvoiceModal()">Create Invoice</button>
+                    <div class="filter-chips">
+                        <div class="filter-chip active" data-status="all" onclick="filterInvoices('all')">All Invoices</div>
+                        <div class="filter-chip" data-status="pending" onclick="filterInvoices('pending')">Pending</div>
+                        <div class="filter-chip" data-status="paid" onclick="filterInvoices('paid')">Paid</div>
+                        <div class="filter-chip" data-status="overdue" onclick="filterInvoices('overdue')">Overdue</div>
+                    </div>
                     <div id="invoicesList" style="margin-top: 16px;">
                         <!-- Invoices will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estimates Tab -->
+        <div id="estimates" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Estimates & Quotes</h3>
+                    <button class="btn btn-primary" onclick="openEstimateModal()">Create Estimate</button>
+                </div>
+                <div class="card-content">
+                    <div id="estimatesList">
+                        <!-- Estimates will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scheduling Tab -->
+        <div id="scheduling" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Schedule Management</h3>
+                    <button class="btn btn-primary" onclick="openScheduleModal()">Add Appointment</button>
+                </div>
+                <div class="card-content">
+                    <div class="grid">
+                        <div style="background: #f8fafc; padding: 16px; border-radius: 8px;">
+                            <h4>Available Time Slots - Today</h4>
+                            <div id="timeSlots" style="margin-top: 12px;">
+                                <div class="time-slot">9:00 AM</div>
+                                <div class="time-slot">10:00 AM</div>
+                                <div class="time-slot">11:00 AM</div>
+                                <div class="time-slot">1:00 PM</div>
+                                <div class="time-slot">2:00 PM</div>
+                                <div class="time-slot">3:00 PM</div>
+                                <div class="time-slot">4:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="appointmentsList" style="margin-top: 16px;">
+                        <!-- Appointments will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks Tab -->
+        <div id="tasks" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Task Management</h3>
+                    <button class="btn btn-primary" onclick="openTaskModal()">Add Task</button>
+                </div>
+                <div class="card-content">
+                    <div id="tasksList">
+                        <!-- Tasks will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expenses Tab -->
+        <div id="expenses" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Expense Tracking</h3>
+                    <button class="btn btn-primary" onclick="openExpenseModal()">Add Expense</button>
+                </div>
+                <div class="card-content">
+                    <div class="expense-summary">
+                        <div class="expense-category">
+                            <div class="expense-amount" id="monthlyExpenses">$0</div>
+                            <div class="expense-label">This Month</div>
+                        </div>
+                        <div class="expense-category">
+                            <div class="expense-amount" id="yearlyExpenses">$0</div>
+                            <div class="expense-label">This Year</div>
+                        </div>
+                        <div class="expense-category">
+                            <div class="expense-amount" id="avgExpense">$0</div>
+                            <div class="expense-label">Avg/Month</div>
+                        </div>
+                    </div>
+                    <div id="expensesList">
+                        <!-- Expenses will be populated here -->
                     </div>
                 </div>
             </div>
@@ -584,9 +1036,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Team Management</h3>
+                    <button class="btn btn-primary" onclick="openTeamModal()">Add Team Member</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="openTeamModal()">Add Team Member</button>
                     <div id="teamList" style="margin-top: 16px;">
                         <!-- Team members will be populated here -->
                     </div>
@@ -599,9 +1051,9 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Photo Management</h3>
+                    <button class="btn btn-primary" onclick="document.getElementById('photoUpload').click()">Upload Photos</button>
                 </div>
                 <div class="card-content">
-                    <button class="btn btn-primary" onclick="document.getElementById('photoUpload').click()">Upload Photos</button>
                     <input type="file" id="photoUpload" style="display: none;" accept="image/*" multiple onchange="handlePhotoUpload(event)">
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 16px;" id="photoGrid">
                         <div style="display: flex; align-items: center; justify-content: center; height: 120px; color: #64748b; font-size: 12px; text-align: center; background: #f1f5f9; border-radius: 8px;">No photos uploaded yet</div>
@@ -615,6 +1067,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Inventory Management</h3>
+                    <button class="btn btn-primary" onclick="openItemModal()">Add New Item</button>
                 </div>
                 <div class="card-content">
                     <div style="margin-bottom: 16px;">
@@ -633,9 +1086,43 @@
                             <option value="General">General</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" onclick="openItemModal()">Add New Item</button>
                     <div id="inventoryList" style="margin-top: 16px;">
                         <!-- Inventory items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Business Reports</h3>
+                    <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <div class="card-content">
+                                <h4>Monthly Summary</h4>
+                                <div class="stats-number" id="monthlyProjects">0</div>
+                                <p>Projects Completed</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <h4>Revenue Growth</h4>
+                                <div class="stats-number" id="revenueGrowth">+0%</div>
+                                <p>vs Last Month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="reportsContent">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📊</div>
+                            <h3>Generate your first report</h3>
+                            <p>Click the button above to create a comprehensive business report</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -691,7 +1178,211 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Phone</label>
-                        <input type="tel" class="form-input" name="phone" required>
+                        <input type="tel" class="form-input" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Hourly Rate</label>
+                        <input type="number" step="0.01" class="form-input" name="rate" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Skills</label>
+                        <input type="text" class="form-input" name="skills" placeholder="e.g., Plumbing, Electrical, Carpentry">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Team Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Item</h3>
+                <button class="modal-close" onclick="closeModal('itemModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm" onsubmit="saveItem(event)">
+                    <div class="form-group">
+                        <label class="form-label">Item Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <input type="number" step="0.01" class="form-input" name="price" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="Labor">Labor</option>
+                            <option value="Lumber">Lumber</option>
+                            <option value="Tile">Tile</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Drywall">Drywall</option>
+                            <option value="Doors & Windows">Doors & Windows</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <input type="text" class="form-input" name="notes" placeholder="Optional description">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="offline-indicator" id="offlineIndicator">
+        Offline Mode - Data will sync when connection is restored
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script>
+        // App Data
+        let appData = {
+            clients: [],
+            leads: [],
+            projects: [],
+            invoices: [],
+            estimates: [],
+            appointments: [],
+            tasks: [],
+            expenses: [],
+            teamMembers: [],
+            photos: [],
+            activities: [],
+            items: []
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAppData();
+            updateDashboard();
+            renderAllData();
+            registerServiceWorker();
+            setupOfflineDetection();
+            
+            // Load imported data after a delay
+            setTimeout(loadRealData, 1000);
+        });
+
+        // Service Worker Registration
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'mjd-crm-v2';
+                    const urlsToCache = ['/'];
+                    
+                    self.addEventListener('install', (event) => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', (event) => {
+                        event.respondWith(
+                            caches.match(event.request).then((response) => {
+                                return response || fetch(event.request);
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swURL = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swURL);
+            }
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Offline Detection
+        function setupOfflineDetection() {
+            function updateOnlineStatus() {
+                const indicator = document.getElementById('offlineIndicator');
+                if (navigator.onLine) {
+                    indicator.style.display = 'none';
+                } else {
+                    indicator.style.display = 'block';
+                }
+            }
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+        }
+
+        // Local Storage Management
+        function saveAppData() {
+            try {
+                localStorage.setItem('mjdCrmData', JSON.stringify(appData));
+            } catch (e) {
+                console.error('Failed to save data:', e);
+            }
+        }
+
+        function loadAppData() {
+            try {
+                const saved = localStorage.getItem('mjdCrmData');
+                if (saved) {
+                    appData = JSON.parse(saved);
+                    // Ensure all arrays exist
+                    appData.estimates = appData.estimates || [];
+                    appData.appointments = appData.appointments || [];
+                    appData.tasks = appData.tasks || [];
+                    appData.expenses = appData.expenses || [];
+                }
+            } catch (e) {
+                console.error('Failed to load data:', e);
+            }
+        }
+
+        // Navigation
+        function switchTab(tabName) {
+            // Update active tab
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Dashboard Updates
+        function updateDashboard() {
+            document.getElementById('totalClients').textContent = appData.clients.length;
+            document.getElementById('activeProjects').textContent = appData.projects.filter(p => p.status !== 'completed').length;
+            document.getElementById('monthlyRevenue').textContent = 'input" name="phone" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
@@ -701,7 +1392,11 @@
                         <label class="form-label">Address</label>
                         <input type="text" class="form-input" name="address" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Client</button>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional client information..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Client</button>
                 </form>
             </div>
         </div>
@@ -753,7 +1448,11 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save Lead</button>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Lead details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Lead</button>
                 </form>
             </div>
         </div>
@@ -801,7 +1500,11 @@
                         <label class="form-label">Budget</label>
                         <input type="number" class="form-input" name="budget" placeholder="$">
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Project</button>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Project details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Project</button>
                 </form>
             </div>
         </div>
@@ -834,7 +1537,181 @@
                         <label class="form-label">Due Date</label>
                         <input type="date" class="form-input" name="dueDate" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Invoice</button>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Invoice notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimate Modal -->
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Estimate</h3>
+                <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm" onsubmit="saveEstimate(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="estimateClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Total</label>
+                        <input type="number" step="0.01" class="form-input" name="total" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valid Until</label>
+                        <input type="date" class="form-input" name="validUntil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional estimate details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Estimate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Appointment</h3>
+                <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" onsubmit="saveAppointment(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="scheduleClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Appointment Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="estimate">Estimate Visit</option>
+                            <option value="work">Work</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (hours)</label>
+                        <input type="number" step="0.5" class="form-input" name="duration" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Appointment details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label class="form-label">Task Title</label>
+                        <input type="text" class="form-input" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assign to</label>
+                        <select class="form-select" name="assignedTo">
+                            <option value="">Select team member</option>
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Task details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('expenseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="materials">Materials</option>
+                            <option value="tools">Tools</option>
+                            <option value="fuel">Fuel</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="office">Office Supplies</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Expense</button>
                 </form>
             </div>
         </div>
@@ -859,180 +1736,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Phone</label>
-                        <input type="tel" class="form-input" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Hourly Rate</label>
-                        <input type="number" step="0.01" class="form-input" name="rate" placeholder="$">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Skills</label>
-                        <input type="text" class="form-input" name="skills" placeholder="e.g., Plumbing, Electrical, Carpentry">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Team Member</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Item Modal -->
-    <div id="itemModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Add New Item</h3>
-                <button class="modal-close" onclick="closeModal('itemModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="itemForm" onsubmit="saveItem(event)">
-                    <div class="form-group">
-                        <label class="form-label">Item Name</label>
-                        <input type="text" class="form-input" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Price</label>
-                        <input type="number" step="0.01" class="form-input" name="price" required placeholder="$">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Category</label>
-                        <select class="form-select" name="category" required>
-                            <option value="">Select category</option>
-                            <option value="Labor">Labor</option>
-                            <option value="Lumber">Lumber</option>
-                            <option value="Tile">Tile</option>
-                            <option value="Electrical">Electrical</option>
-                            <option value="Plumbing">Plumbing</option>
-                            <option value="Paint">Paint</option>
-                            <option value="Drywall">Drywall</option>
-                            <option value="Doors & Windows">Doors & Windows</option>
-                            <option value="Roofing">Roofing</option>
-                            <option value="General">General</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Notes</label>
-                        <input type="text" class="form-input" name="notes" placeholder="Optional description">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Item</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="offline-indicator" id="offlineIndicator">
-        Offline Mode - Data will sync when connection is restored
-    </div>
-
-    <script>
-        // App Data
-        let appData = {
-            clients: [],
-            leads: [],
-            projects: [],
-            invoices: [],
-            teamMembers: [],
-            photos: [],
-            activities: [],
-            items: []
-        };
-
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAppData();
-            updateDashboard();
-            renderAllData();
-            registerServiceWorker();
-            setupOfflineDetection();
+                        <input type="tel" class="form- + calculateMonthlyRevenue().toLocaleString();
+            document.getElementById('pendingInvoices').textContent = appData.invoices.filter(i => i.status === 'pending').length;
             
-            // Load imported data after a delay
-            setTimeout(loadRealData, 1000);
-        });
-
-        // Service Worker Registration
-        function registerServiceWorker() {
-            if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'mjd-crm-v1';
-                    const urlsToCache = ['/'];
-                    
-                    self.addEventListener('install', (event) => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
-                        );
-                    });
-                    
-                    self.addEventListener('fetch', (event) => {
-                        event.respondWith(
-                            caches.match(event.request).then((response) => {
-                                return response || fetch(event.request);
-                            })
-                        );
-                    });
-                `;
-                
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swURL = URL.createObjectURL(blob);
-                
-                navigator.serviceWorker.register(swURL);
-            }
-        }
-
-        // Offline Detection
-        function setupOfflineDetection() {
-            function updateOnlineStatus() {
-                const indicator = document.getElementById('offlineIndicator');
-                if (navigator.onLine) {
-                    indicator.style.display = 'none';
-                } else {
-                    indicator.style.display = 'block';
-                }
-            }
-
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            updateOnlineStatus();
-        }
-
-        // Local Storage Management
-        function saveAppData() {
-            try {
-                localStorage.setItem('mjdCrmData', JSON.stringify(appData));
-            } catch (e) {
-                console.error('Failed to save data:', e);
-            }
-        }
-
-        function loadAppData() {
-            try {
-                const saved = localStorage.getItem('mjdCrmData');
-                if (saved) {
-                    appData = JSON.parse(saved);
-                }
-            } catch (e) {
-                console.error('Failed to load data:', e);
-            }
-        }
-
-        // Navigation
-        function switchTab(tabName) {
-            // Update active tab
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Show content
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-        }
-
-        // Dashboard Updates
-        function updateDashboard() {
-            document.getElementById('totalClients').textContent = appData.clients.length;
-            document.getElementById('activeProjects').textContent = appData.projects.filter(p => p.status !== 'completed').length;
-            document.getElementById('monthlyRevenue').textContent = '$' + calculateMonthlyRevenue().toLocaleString();
-            document.getElementById('totalItems').textContent = (appData.items || []).length;
+            updateTodaysSchedule();
+            updateExpenseSummary();
         }
 
         function calculateMonthlyRevenue() {
@@ -1049,6 +1757,1126 @@
                 .reduce((total, invoice) => total + parseFloat(invoice.amount), 0);
         }
 
+        function updateTodaysSchedule() {
+            const today = new Date().toISOString().split('T')[0];
+            const todaysAppointments = appData.appointments.filter(apt => apt.date === today);
+            
+            const container = document.getElementById('todaysSchedule');
+            if (todaysAppointments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <h3>No appointments today</h3>
+                        <p>Your schedule is clear!</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = todaysAppointments.map(apt => {
+                    const client = appData.clients.find(c => c.id === apt.clientId);
+                    return `
+                        <div class="appointment-card">
+                            <div style="display: flex; justify-content: between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 600;">${client ? client.name : 'Unknown Client'}</div>
+                                    <div style="font-size: 14px; opacity: 0.9;">${apt.type} - ${apt.time}</div>
+                                </div>
+                                <div style="font-size: 12px;">${apt.duration}h</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function updateExpenseSummary() {
+            const thisMonth = new Date().getMonth();
+            const thisYear = new Date().getFullYear();
+            
+            const monthlyExpenses = appData.expenses
+                .filter(expense => {
+                    const expenseDate = new Date(expense.date);
+                    return expenseDate.getMonth() === thisMonth && expenseDate.getFullYear() === thisYear;
+                })
+                .reduce((total, expense) => total + parseFloat(expense.amount), 0);
+
+            const yearlyExpenses = appData.expenses
+                .filter(expense => {
+                    const expenseDate = new Date(expense.date);
+                    return expenseDate.getFullYear() === thisYear;
+                })
+                .reduce((total, expense) => total + parseFloat(expense.amount), 0);
+
+            const avgExpense = yearlyExpenses / 12;
+
+            if (document.getElementById('monthlyExpenses')) {
+                document.getElementById('monthlyExpenses').textContent = 'input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional client information..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm" onsubmit="saveLead(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="projectType" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <input type="number" class="form-input" name="estimatedValue" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source</label>
+                        <select class="form-select" name="source">
+                            <option value="referral">Referral</option>
+                            <option value="website">Website</option>
+                            <option value="social">Social Media</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Lead details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Lead</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Project</h3>
+                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="projectClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget</label>
+                        <input type="number" class="form-input" name="budget" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Project details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Invoice</h3>
+                <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" onsubmit="saveInvoice(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="invoiceClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Invoice notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimate Modal -->
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Estimate</h3>
+                <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm" onsubmit="saveEstimate(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="estimateClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Total</label>
+                        <input type="number" step="0.01" class="form-input" name="total" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valid Until</label>
+                        <input type="date" class="form-input" name="validUntil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional estimate details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Estimate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Appointment</h3>
+                <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" onsubmit="saveAppointment(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="scheduleClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Appointment Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="estimate">Estimate Visit</option>
+                            <option value="work">Work</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (hours)</label>
+                        <input type="number" step="0.5" class="form-input" name="duration" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Appointment details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label class="form-label">Task Title</label>
+                        <input type="text" class="form-input" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assign to</label>
+                        <select class="form-select" name="assignedTo">
+                            <option value="">Select team member</option>
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Task details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('expenseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="materials">Materials</option>
+                            <option value="tools">Tools</option>
+                            <option value="fuel">Fuel</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="office">Office Supplies</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Team Member</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="teamForm" onsubmit="saveTeamMember(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form- + monthlyExpenses.toLocaleString();
+                document.getElementById('yearlyExpenses').textContent = 'input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional client information..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm" onsubmit="saveLead(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="projectType" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <input type="number" class="form-input" name="estimatedValue" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source</label>
+                        <select class="form-select" name="source">
+                            <option value="referral">Referral</option>
+                            <option value="website">Website</option>
+                            <option value="social">Social Media</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Lead details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Lead</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Project</h3>
+                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="projectClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget</label>
+                        <input type="number" class="form-input" name="budget" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Project details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Invoice</h3>
+                <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" onsubmit="saveInvoice(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="invoiceClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Invoice notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimate Modal -->
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Estimate</h3>
+                <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm" onsubmit="saveEstimate(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="estimateClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Total</label>
+                        <input type="number" step="0.01" class="form-input" name="total" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valid Until</label>
+                        <input type="date" class="form-input" name="validUntil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional estimate details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Estimate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Appointment</h3>
+                <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" onsubmit="saveAppointment(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="scheduleClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Appointment Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="estimate">Estimate Visit</option>
+                            <option value="work">Work</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (hours)</label>
+                        <input type="number" step="0.5" class="form-input" name="duration" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Appointment details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label class="form-label">Task Title</label>
+                        <input type="text" class="form-input" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assign to</label>
+                        <select class="form-select" name="assignedTo">
+                            <option value="">Select team member</option>
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Task details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('expenseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="materials">Materials</option>
+                            <option value="tools">Tools</option>
+                            <option value="fuel">Fuel</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="office">Office Supplies</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Team Member</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="teamForm" onsubmit="saveTeamMember(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form- + yearlyExpenses.toLocaleString();
+                document.getElementById('avgExpense').textContent = 'input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional client information..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm" onsubmit="saveLead(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="projectType" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <input type="number" class="form-input" name="estimatedValue" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source</label>
+                        <select class="form-select" name="source">
+                            <option value="referral">Referral</option>
+                            <option value="website">Website</option>
+                            <option value="social">Social Media</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Lead details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Lead</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Project</h3>
+                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="projectClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget</label>
+                        <input type="number" class="form-input" name="budget" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Project details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Invoice</h3>
+                <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" onsubmit="saveInvoice(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="invoiceClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Invoice notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimate Modal -->
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Estimate</h3>
+                <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm" onsubmit="saveEstimate(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="estimateClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Total</label>
+                        <input type="number" step="0.01" class="form-input" name="total" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valid Until</label>
+                        <input type="date" class="form-input" name="validUntil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional estimate details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Estimate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Appointment</h3>
+                <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" onsubmit="saveAppointment(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="scheduleClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Appointment Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="estimate">Estimate Visit</option>
+                            <option value="work">Work</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (hours)</label>
+                        <input type="number" step="0.5" class="form-input" name="duration" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Appointment details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label class="form-label">Task Title</label>
+                        <input type="text" class="form-input" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assign to</label>
+                        <select class="form-select" name="assignedTo">
+                            <option value="">Select team member</option>
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Task details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('expenseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="materials">Materials</option>
+                            <option value="tools">Tools</option>
+                            <option value="fuel">Fuel</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="office">Office Supplies</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Team Member</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="teamForm" onsubmit="saveTeamMember(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form- + avgExpense.toLocaleString();
+            }
+        }
+
         // Client Management
         function openClientModal() {
             document.getElementById('clientModal').classList.add('active');
@@ -1063,6 +2891,7 @@
                 phone: formData.get('phone'),
                 email: formData.get('email'),
                 address: formData.get('address'),
+                notes: formData.get('notes') || '',
                 createdAt: new Date().toISOString(),
                 projects: []
             };
@@ -1072,29 +2901,58 @@
             saveAppData();
             renderClients();
             updateDashboard();
+            populateAllClientSelects();
             closeModal('clientModal');
             event.target.reset();
+            showNotification('Client added successfully!');
         }
 
         function renderClients() {
             const container = document.getElementById('clientsList');
-            if (appData.clients.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No clients yet</p>';
+            const searchTerm = document.getElementById('clientSearch')?.value.toLowerCase() || '';
+            
+            let clients = appData.clients;
+            if (searchTerm) {
+                clients = clients.filter(client => 
+                    client.name.toLowerCase().includes(searchTerm) ||
+                    client.email.toLowerCase().includes(searchTerm) ||
+                    client.phone.includes(searchTerm)
+                );
+            }
+            
+            if (clients.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👥</div>
+                        <h3>No clients found</h3>
+                        <p>Start by adding your first client!</p>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = appData.clients.map(client => `
-                <div class="client-card">
+            container.innerHTML = clients.map(client => `
+                <div class="client-card slide-in">
                     <div class="client-name">${client.name}</div>
                     <div class="client-info">📞 ${client.phone}</div>
                     <div class="client-info">✉️ ${client.email}</div>
                     <div class="client-info">📍 ${client.address}</div>
-                    <div style="margin-top: 8px;">
-                        <button class="btn btn-small btn-secondary" onclick="viewClientProjects(${client.id})">View Projects</button>
-                        <button class="btn btn-small btn-primary" onclick="createInvoiceForClient(${client.id})">Create Invoice</button>
+                    ${client.notes ? `<div class="client-info">📝 ${client.notes}</div>` : ''}
+                    <div class="btn-group">
+                        <button class="btn btn-small btn-secondary" onclick="viewClientProjects(${client.id})">Projects</button>
+                        <button class="btn btn-small btn-primary" onclick="createInvoiceForClient(${client.id})">Invoice</button>
+                        <button class="btn btn-small btn-success" onclick="callClient('${client.phone}')">Call</button>
                     </div>
                 </div>
             `).join('');
+        }
+
+        function searchClients() {
+            renderClients();
+        }
+
+        function callClient(phone) {
+            window.location.href = `tel:${phone}`;
         }
 
         // Lead Management
@@ -1113,6 +2971,7 @@
                 projectType: formData.get('projectType'),
                 estimatedValue: parseFloat(formData.get('estimatedValue')) || 0,
                 source: formData.get('source'),
+                notes: formData.get('notes') || '',
                 createdAt: new Date().toISOString(),
                 status: 'new',
                 score: calculateLeadScore({
@@ -1130,6 +2989,7 @@
             updateDashboard();
             closeModal('leadModal');
             event.target.reset();
+            showNotification('Lead added successfully!');
         }
 
         function calculateLeadScore(lead) {
@@ -1173,34 +3033,73 @@
 
         function renderLeads() {
             const container = document.getElementById('leadsList');
-            if (appData.leads.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No leads yet</p>';
+            const activeFilter = document.querySelector('.filter-chips .filter-chip.active[data-status]')?.dataset.status || 'all';
+            
+            let leads = appData.leads;
+            if (activeFilter !== 'all') {
+                leads = leads.filter(lead => lead.status === activeFilter);
+            }
+            
+            if (leads.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎯</div>
+                        <h3>No leads found</h3>
+                        <p>Add your first lead to start growing your business!</p>
+                    </div>
+                `;
                 return;
             }
             
-            const sortedLeads = appData.leads.sort((a, b) => b.score - a.score);
+            const sortedLeads = leads.sort((a, b) => b.score - a.score);
             
             container.innerHTML = sortedLeads.map(lead => {
                 const scoreClass = lead.score >= 70 ? 'lead-score-high' : 
                                  lead.score >= 40 ? 'lead-score-medium' : 'lead-score-low';
                 
                 return `
-                    <div class="client-card">
+                    <div class="client-card slide-in">
                         <div class="client-name">
                             ${lead.name}
                             <span class="lead-score ${scoreClass}">${lead.score}</span>
                         </div>
                         <div class="client-info">📞 ${lead.phone}</div>
                         <div class="client-info">🏗️ ${lead.projectType}</div>
-                        <div class="client-info">💰 $${lead.estimatedValue.toLocaleString()}</div>
+                        <div class="client-info">💰 ${lead.estimatedValue.toLocaleString()}</div>
                         <div class="client-info">📊 ${lead.source}</div>
-                        <div style="margin-top: 8px;">
-                            <button class="btn btn-small btn-success" onclick="convertLead(${lead.id})">Convert to Client</button>
-                            <button class="btn btn-small btn-secondary" onclick="contactLead(${lead.id})">Contact</button>
+                        <div class="client-info">
+                            <span class="status-badge status-${lead.status}">${lead.status}</span>
+                        </div>
+                        ${lead.notes ? `<div class="client-info">📝 ${lead.notes}</div>` : ''}
+                        <div class="btn-group">
+                            <button class="btn btn-small btn-success" onclick="convertLead(${lead.id})">Convert</button>
+                            <button class="btn btn-small btn-secondary" onclick="updateLeadStatus(${lead.id})">Update</button>
+                            <button class="btn btn-small btn-primary" onclick="contactLead(${lead.id})">Contact</button>
                         </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function filterLeads(status) {
+            document.querySelectorAll('.filter-chips .filter-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelector(`[data-status="${status}"]`).classList.add('active');
+            renderLeads();
+        }
+
+        function updateLeadStatus(leadId) {
+            const lead = appData.leads.find(l => l.id === leadId);
+            if (lead) {
+                const statuses = ['new', 'contacted', 'qualified', 'proposal_sent'];
+                const currentIndex = statuses.indexOf(lead.status);
+                const nextStatus = statuses[Math.min(currentIndex + 1, statuses.length - 1)];
+                
+                lead.status = nextStatus;
+                addActivity(`Lead status updated: ${lead.name} - ${nextStatus}`);
+                saveAppData();
+                renderLeads();
+                showNotification(`Lead status updated to ${nextStatus}`);
+            }
         }
 
         function convertLead(leadId) {
@@ -1212,6 +3111,7 @@
                     phone: lead.phone,
                     email: lead.email,
                     address: '',
+                    notes: lead.notes,
                     createdAt: new Date().toISOString(),
                     projects: []
                 };
@@ -1223,6 +3123,8 @@
                 renderLeads();
                 renderClients();
                 updateDashboard();
+                populateAllClientSelects();
+                showNotification(`${lead.name} converted to client!`);
             }
         }
 
@@ -1240,12 +3142,12 @@
 
         // Project Management
         function openProjectModal() {
-            populateClientSelects();
+            populateAllClientSelects();
             document.getElementById('projectModal').classList.add('active');
         }
 
-        function populateClientSelects() {
-            const selects = ['projectClientSelect', 'invoiceClientSelect'];
+        function populateAllClientSelects() {
+            const selects = ['projectClientSelect', 'invoiceClientSelect', 'estimateClientSelect', 'scheduleClientSelect'];
             selects.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (select) {
@@ -1268,6 +3170,7 @@
                 startDate: formData.get('startDate'),
                 endDate: formData.get('endDate'),
                 budget: parseFloat(formData.get('budget')) || 0,
+                description: formData.get('description') || '',
                 progress: 0,
                 status: 'planning',
                 createdAt: new Date().toISOString()
@@ -1280,16 +3183,30 @@
             updateDashboard();
             closeModal('projectModal');
             event.target.reset();
+            showNotification('Project created successfully!');
         }
 
         function renderProjects() {
             const container = document.getElementById('projectsList');
-            if (appData.projects.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No projects yet</p>';
+            const activeFilter = document.querySelector('#projects .filter-chips .filter-chip.active[data-status]')?.dataset.status || 'all';
+            
+            let projects = appData.projects;
+            if (activeFilter !== 'all') {
+                projects = projects.filter(project => project.status === activeFilter);
+            }
+            
+            if (projects.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🏗️</div>
+                        <h3>No projects found</h3>
+                        <p>Create your first project!</p>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = appData.projects.map(project => {
+            container.innerHTML = projects.map(project => {
                 const client = appData.clients.find(c => c.id === project.clientId);
                 const statusColors = {
                     planning: '#f59e0b',
@@ -1299,25 +3216,32 @@
                 };
                 
                 return `
-                    <div class="client-card">
+                    <div class="client-card slide-in">
                         <div class="client-name">${project.name}</div>
                         <div class="client-info">👤 ${client ? client.name : 'Unknown Client'}</div>
                         <div class="client-info">🏗️ ${project.type}</div>
-                        <div class="client-info">💰 $${project.budget.toLocaleString()}</div>
+                        <div class="client-info">💰 ${project.budget.toLocaleString()}</div>
                         <div class="client-info">📅 ${project.startDate} to ${project.endDate}</div>
+                        ${project.description ? `<div class="client-info">📝 ${project.description}</div>` : ''}
                         <div style="margin-top: 8px;">
                             <span style="color: ${statusColors[project.status]}">● ${project.status.replace('_', ' ')}</span>
                             <div class="progress-bar" style="margin-top: 8px;">
                                 <div class="progress-fill" style="width: ${project.progress}%"></div>
                             </div>
-                            <div style="margin-top: 8px;">
-                                <button class="btn btn-small btn-secondary" onclick="updateProjectProgress(${project.id})">Update Progress</button>
-                                <button class="btn btn-small btn-primary" onclick="createInvoiceForProject(${project.id})">Create Invoice</button>
+                            <div class="btn-group">
+                                <button class="btn btn-small btn-secondary" onclick="updateProjectProgress(${project.id})">Progress</button>
+                                <button class="btn btn-small btn-primary" onclick="createInvoiceForProject(${project.id})">Invoice</button>
                             </div>
                         </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function filterProjects(status) {
+            document.querySelectorAll('#projects .filter-chips .filter-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelector(`#projects [data-status="${status}"]`).classList.add('active');
+            renderProjects();
         }
 
         function updateProjectProgress(projectId) {
@@ -1329,21 +3253,38 @@
                     if (project.progress === 100) {
                         project.status = 'completed';
                         addActivity(`Project completed: ${project.name}`);
+                    } else if (project.progress > 0 && project.status === 'planning') {
+                        project.status = 'in_progress';
                     }
                     saveAppData();
                     renderProjects();
+                    updateDashboard();
+                    showNotification('Project progress updated!');
                 }
             }
         }
 
         function createInvoiceForProject(projectId) {
-            populateClientSelects();
-            document.getElementById('invoiceModal').classList.add('active');
+            populateAllClientSelects();
+            const project = appData.projects.find(p => p.id === projectId);
+            if (project) {
+                document.getElementById('invoiceModal').classList.add('active');
+                // Pre-fill some fields
+                setTimeout(() => {
+                    const clientSelect = document.getElementById('invoiceClientSelect');
+                    const descriptionField = document.querySelector('#invoiceForm [name="description"]');
+                    const amountField = document.querySelector('#invoiceForm [name="amount"]');
+                    
+                    if (clientSelect) clientSelect.value = project.clientId;
+                    if (descriptionField) descriptionField.value = `Work on ${project.name}`;
+                    if (amountField && project.budget) amountField.value = project.budget;
+                }, 100);
+            }
         }
 
         // Invoice Management
         function openInvoiceModal() {
-            populateClientSelects();
+            populateAllClientSelects();
             document.getElementById('invoiceModal').classList.add('active');
         }
 
@@ -1356,18 +3297,20 @@
                 description: formData.get('description'),
                 amount: parseFloat(formData.get('amount')),
                 dueDate: formData.get('dueDate'),
+                notes: formData.get('notes') || '',
                 status: 'pending',
                 date: new Date().toISOString(),
                 paymentLinks: generatePaymentLinks(parseFloat(formData.get('amount')))
             };
             
             appData.invoices.push(invoice);
-            addActivity(`New invoice created: $${invoice.amount} for ${appData.clients.find(c => c.id === invoice.clientId)?.name || 'Unknown Client'}`);
+            addActivity(`New invoice created: ${invoice.amount} for ${appData.clients.find(c => c.id === invoice.clientId)?.name || 'Unknown Client'}`);
             saveAppData();
             renderInvoices();
             updateDashboard();
             closeModal('invoiceModal');
             event.target.reset();
+            showNotification('Invoice created successfully!');
         }
 
         function generatePaymentLinks(amount) {
@@ -1381,12 +3324,34 @@
 
         function renderInvoices() {
             const container = document.getElementById('invoicesList');
-            if (appData.invoices.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No invoices yet</p>';
+            const activeFilter = document.querySelector('#invoices .filter-chips .filter-chip.active[data-status]')?.dataset.status || 'all';
+            
+            let invoices = appData.invoices;
+            
+            // Apply status filter
+            if (activeFilter !== 'all') {
+                if (activeFilter === 'overdue') {
+                    invoices = invoices.filter(invoice => {
+                        const isOverdue = new Date(invoice.dueDate) < new Date() && invoice.status === 'pending';
+                        return isOverdue;
+                    });
+                } else {
+                    invoices = invoices.filter(invoice => invoice.status === activeFilter);
+                }
+            }
+            
+            if (invoices.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💳</div>
+                        <h3>No invoices found</h3>
+                        <p>Create your first invoice!</p>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = appData.invoices.map(invoice => {
+            container.innerHTML = invoices.map(invoice => {
                 const client = appData.clients.find(c => c.id === invoice.clientId);
                 const statusColors = {
                     pending: '#f59e0b',
@@ -1399,36 +3364,43 @@
                 const currentStatus = isOverdue ? 'overdue' : invoice.status;
                 
                 return `
-                    <div class="client-card">
+                    <div class="client-card slide-in">
                         <div class="client-name">
-                            Invoice #${invoice.id}
+                            Invoice #${invoice.id.toString().slice(-6)}
                             <span style="color: ${statusColors[currentStatus]}; font-size: 12px;">● ${currentStatus}</span>
                         </div>
                         <div class="client-info">👤 ${client ? client.name : 'Unknown Client'}</div>
                         <div class="client-info">📝 ${invoice.description}</div>
-                        <div class="client-info">💰 $${invoice.amount.toLocaleString()}</div>
-                        <div class="client-info">📅 Due: ${invoice.dueDate}</div>
+                        <div class="client-info">💰 ${invoice.amount.toLocaleString()}</div>
+                        <div class="client-info">📅 Due: ${new Date(invoice.dueDate).toLocaleDateString()}</div>
+                        ${invoice.notes ? `<div class="client-info">📝 ${invoice.notes}</div>` : ''}
                         ${invoice.status === 'pending' ? `
                             <div style="margin-top: 12px;">
                                 <a href="${invoice.paymentLinks.venmo}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with Venmo</a>
                                 <a href="${invoice.paymentLinks.paypal}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with PayPal</a>
-                                <a href="${invoice.paymentLinks.cashapp}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with CashApp</a>
                             </div>
                         ` : ''}
-                        <div style="margin-top: 8px;">
-                            <button class="btn btn-small btn-secondary" onclick="viewInvoiceDetails(${invoice.id})">View Details</button>
+                        <div class="btn-group">
+                            <button class="btn btn-small btn-secondary" onclick="viewInvoiceDetails(${invoice.id})">Details</button>
                             ${invoice.status === 'pending' ? `<button class="btn btn-small btn-success" onclick="markInvoicePaid(${invoice.id})">Mark Paid</button>` : ''}
+                            <button class="btn btn-small btn-primary" onclick="sendInvoice(${invoice.id})">Send</button>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
+        function filterInvoices(status) {
+            document.querySelectorAll('#invoices .filter-chips .filter-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelector(`#invoices [data-status="${status}"]`).classList.add('active');
+            renderInvoices();
+        }
+
         function viewInvoiceDetails(invoiceId) {
             const invoice = appData.invoices.find(i => i.id === invoiceId);
             if (invoice) {
                 const client = appData.clients.find(c => c.id === invoice.clientId);
-                alert(`Invoice #${invoice.id}\nClient: ${client?.name || 'Unknown'}\nAmount: $${invoice.amount}\nDue: ${invoice.dueDate}\nStatus: ${invoice.status}`);
+                alert(`Invoice #${invoice.id.toString().slice(-6)}\nClient: ${client?.name || 'Unknown'}\nAmount: ${invoice.amount}\nDue: ${new Date(invoice.dueDate).toLocaleDateString()}\nStatus: ${invoice.status}\n\nDescription: ${invoice.description}`);
             }
         }
 
@@ -1437,14 +3409,390 @@
             if (invoice) {
                 invoice.status = 'paid';
                 invoice.paidDate = new Date().toISOString();
-                addActivity(`Invoice paid: $${invoice.amount}`);
+                addActivity(`Invoice paid: ${invoice.amount}`);
                 saveAppData();
                 renderInvoices();
                 updateDashboard();
+                showNotification('Invoice marked as paid!');
             }
         }
 
-        // Calculator Functions
+        function sendInvoice(invoiceId) {
+            const invoice = appData.invoices.find(i => i.id === invoiceId);
+            if (invoice) {
+                const client = appData.clients.find(c => c.id === invoice.clientId);
+                if (client) {
+                    const subject = `Invoice from MJD Home Improvement - ${invoice.amount}`;
+                    const body = `Dear ${client.name},\n\nPlease find your invoice details below:\n\nDescription: ${invoice.description}\nAmount: ${invoice.amount}\nDue Date: ${new Date(invoice.dueDate).toLocaleDateString()}\n\nPayment Links:\nVenmo: ${invoice.paymentLinks.venmo}\nPayPal: ${invoice.paymentLinks.paypal}\n\nThank you!\nMJD Home Improvement\n(508)-902-7529`;
+                    
+                    window.location.href = `mailto:${client.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                }
+            }
+        }
+
+        // Estimate Management
+        function openEstimateModal() {
+            populateAllClientSelects();
+            document.getElementById('estimateModal').classList.add('active');
+        }
+
+        function saveEstimate(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const estimate = {
+                id: Date.now(),
+                clientId: parseInt(formData.get('clientId')),
+                description: formData.get('description'),
+                total: parseFloat(formData.get('total')),
+                validUntil: formData.get('validUntil'),
+                notes: formData.get('notes') || '',
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.estimates.push(estimate);
+            addActivity(`New estimate created: ${estimate.total} for ${appData.clients.find(c => c.id === estimate.clientId)?.name || 'Unknown Client'}`);
+            saveAppData();
+            renderEstimates();
+            closeModal('estimateModal');
+            event.target.reset();
+            showNotification('Estimate created successfully!');
+        }
+
+        function renderEstimates() {
+            const container = document.getElementById('estimatesList');
+            
+            if (appData.estimates.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <h3>No estimates yet</h3>
+                        <p>Create your first estimate!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = appData.estimates.map(estimate => {
+                const client = appData.clients.find(c => c.id === estimate.clientId);
+                const isExpired = new Date(estimate.validUntil) < new Date();
+                
+                return `
+                    <div class="client-card slide-in">
+                        <div class="client-name">
+                            Estimate #${estimate.id.toString().slice(-6)}
+                            <span class="status-badge ${isExpired ? 'status-overdue' : 'status-' + estimate.status}">${isExpired ? 'expired' : estimate.status}</span>
+                        </div>
+                        <div class="client-info">👤 ${client ? client.name : 'Unknown Client'}</div>
+                        <div class="client-info">📝 ${estimate.description}</div>
+                        <div class="client-info">💰 ${estimate.total.toLocaleString()}</div>
+                        <div class="client-info">📅 Valid until: ${new Date(estimate.validUntil).toLocaleDateString()}</div>
+                        ${estimate.notes ? `<div class="client-info">📝 ${estimate.notes}</div>` : ''}
+                        <div class="btn-group">
+                            <button class="btn btn-small btn-secondary" onclick="viewEstimate(${estimate.id})">View</button>
+                            <button class="btn btn-small btn-primary" onclick="sendEstimate(${estimate.id})">Send</button>
+                            ${estimate.status === 'pending' ? `<button class="btn btn-small btn-success" onclick="acceptEstimate(${estimate.id})">Accept</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewEstimate(estimateId) {
+            const estimate = appData.estimates.find(e => e.id === estimateId);
+            if (estimate) {
+                const client = appData.clients.find(c => c.id === estimate.clientId);
+                alert(`Estimate #${estimate.id.toString().slice(-6)}\nClient: ${client?.name || 'Unknown'}\nProject: ${estimate.description}\nTotal: ${estimate.total}\nValid until: ${new Date(estimate.validUntil).toLocaleDateString()}\nStatus: ${estimate.status}`);
+            }
+        }
+
+        function sendEstimate(estimateId) {
+            const estimate = appData.estimates.find(e => e.id === estimateId);
+            if (estimate) {
+                const client = appData.clients.find(c => c.id === estimate.clientId);
+                if (client) {
+                    const subject = `Estimate from MJD Home Improvement - ${estimate.total}`;
+                    const body = `Dear ${client.name},\n\nPlease find your project estimate below:\n\nProject: ${estimate.description}\nEstimated Total: ${estimate.total}\nValid Until: ${new Date(estimate.validUntil).toLocaleDateString()}\n\n${estimate.notes}\n\nPlease let us know if you have any questions!\n\nBest regards,\nMJD Home Improvement\n(508)-902-7529`;
+                    
+                    window.location.href = `mailto:${client.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                }
+            }
+        }
+
+        function acceptEstimate(estimateId) {
+            const estimate = appData.estimates.find(e => e.id === estimateId);
+            if (estimate) {
+                estimate.status = 'accepted';
+                addActivity(`Estimate accepted: ${estimate.description} - ${estimate.total}`);
+                saveAppData();
+                renderEstimates();
+                showNotification('Estimate marked as accepted!');
+            }
+        }
+
+        // Scheduling Management
+        function openScheduleModal() {
+            populateAllClientSelects();
+            document.getElementById('scheduleModal').classList.add('active');
+        }
+
+        function saveAppointment(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const appointment = {
+                id: Date.now(),
+                clientId: parseInt(formData.get('clientId')),
+                type: formData.get('type'),
+                date: formData.get('date'),
+                time: formData.get('time'),
+                duration: parseFloat(formData.get('duration')),
+                notes: formData.get('notes') || '',
+                status: 'scheduled',
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.appointments.push(appointment);
+            addActivity(`Appointment scheduled: ${appointment.type} with ${appData.clients.find(c => c.id === appointment.clientId)?.name || 'Unknown Client'}`);
+            saveAppData();
+            renderAppointments();
+            updateTodaysSchedule();
+            closeModal('scheduleModal');
+            event.target.reset();
+            showNotification('Appointment scheduled successfully!');
+        }
+
+        function renderAppointments() {
+            const container = document.getElementById('appointmentsList');
+            
+            if (appData.appointments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <h3>No appointments scheduled</h3>
+                        <p>Schedule your first appointment!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const sortedAppointments = appData.appointments.sort((a, b) => new Date(a.date + ' ' + a.time) - new Date(b.date + ' ' + b.time));
+            
+            container.innerHTML = sortedAppointments.map(appointment => {
+                const client = appData.clients.find(c => c.id === appointment.clientId);
+                const appointmentDate = new Date(appointment.date + ' ' + appointment.time);
+                const isPast = appointmentDate < new Date();
+                
+                return `
+                    <div class="appointment-card slide-in">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 16px;">${client ? client.name : 'Unknown Client'}</div>
+                                <div style="opacity: 0.9; margin: 4px 0;">${appointment.type}</div>
+                                <div style="font-size: 14px; opacity: 0.8;">
+                                    ${new Date(appointment.date).toLocaleDateString()} at ${appointment.time}
+                                </div>
+                                <div style="font-size: 12px; opacity: 0.7;">${appointment.duration} hour(s)</div>
+                                ${appointment.notes ? `<div style="font-size: 12px; opacity: 0.8; margin-top: 4px;">${appointment.notes}</div>` : ''}
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 12px; padding: 4px 8px; background: rgba(255,255,255,0.2); border-radius: 12px; margin-bottom: 8px;">
+                                    ${isPast ? 'Past' : 'Upcoming'}
+                                </div>
+                                ${!isPast ? `
+                                    <button class="btn btn-small btn-secondary" onclick="completeAppointment(${appointment.id})" style="padding: 4px 8px; font-size: 11px;">Complete</button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function completeAppointment(appointmentId) {
+            const appointment = appData.appointments.find(a => a.id === appointmentId);
+            if (appointment) {
+                appointment.status = 'completed';
+                addActivity(`Appointment completed: ${appointment.type}`);
+                saveAppData();
+                renderAppointments();
+                updateTodaysSchedule();
+                showNotification('Appointment marked as completed!');
+            }
+        }
+
+        // Task Management
+        function openTaskModal() {
+            document.getElementById('taskModal').classList.add('active');
+        }
+
+        function saveTask(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const task = {
+                id: Date.now(),
+                title: formData.get('title'),
+                priority: formData.get('priority'),
+                dueDate: formData.get('dueDate'),
+                assignedTo: formData.get('assignedTo') || 'self',
+                description: formData.get('description') || '',
+                status: 'pending',
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.tasks.push(task);
+            addActivity(`New task created: ${task.title}`);
+            saveAppData();
+            renderTasks();
+            closeModal('taskModal');
+            event.target.reset();
+            showNotification('Task added successfully!');
+        }
+
+        function renderTasks() {
+            const container = document.getElementById('tasksList');
+            
+            if (appData.tasks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <h3>No tasks yet</h3>
+                        <p>Add your first task to get organized!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const sortedTasks = appData.tasks.sort((a, b) => {
+                if (a.completed !== b.completed) return a.completed - b.completed;
+                const priorities = { high: 3, medium: 2, low: 1 };
+                return priorities[b.priority] - priorities[a.priority];
+            });
+            
+            container.innerHTML = sortedTasks.map(task => {
+                return `
+                    <div class="task-item slide-in" style="opacity: ${task.completed ? '0.6' : '1'}">
+                        <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} 
+                               onchange="toggleTask(${task.id})">
+                        <div class="task-content">
+                            <div style="font-weight: 600; ${task.completed ? 'text-decoration: line-through;' : ''}">${task.title}</div>
+                            ${task.description ? `<div style="font-size: 14px; color: #64748b; margin-top: 2px;">${task.description}</div>` : ''}
+                            ${task.dueDate ? `<div style="font-size: 12px; color: #64748b; margin-top: 4px;">Due: ${new Date(task.dueDate).toLocaleDateString()}</div>` : ''}
+                        </div>
+                        <div class="task-priority priority-${task.priority}"></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleTask(taskId) {
+            const task = appData.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                task.status = task.completed ? 'completed' : 'pending';
+                addActivity(`Task ${task.completed ? 'completed' : 'reopened'}: ${task.title}`);
+                saveAppData();
+                renderTasks();
+                showNotification(`Task ${task.completed ? 'completed' : 'reopened'}!`);
+            }
+        }
+
+        // Expense Management
+        function openExpenseModal() {
+            // Set today's date as default
+            setTimeout(() => {
+                const dateInput = document.querySelector('#expenseForm [name="date"]');
+                if (dateInput) {
+                    dateInput.value = new Date().toISOString().split('T')[0];
+                }
+            }, 100);
+            document.getElementById('expenseModal').classList.add('active');
+        }
+
+        function saveExpense(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const expense = {
+                id: Date.now(),
+                description: formData.get('description'),
+                amount: parseFloat(formData.get('amount')),
+                category: formData.get('category'),
+                date: formData.get('date'),
+                notes: formData.get('notes') || '',
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.expenses.push(expense);
+            addActivity(`New expense added: ${expense.description} - ${expense.amount}`);
+            saveAppData();
+            renderExpenses();
+            updateExpenseSummary();
+            closeModal('expenseModal');
+            event.target.reset();
+            showNotification('Expense added successfully!');
+        }
+
+        function renderExpenses() {
+            const container = document.getElementById('expensesList');
+            
+            if (appData.expenses.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💰</div>
+                        <h3>No expenses yet</h3>
+                        <p>Track your first business expense!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const sortedExpenses = appData.expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            container.innerHTML = sortedExpenses.map(expense => {
+                return `
+                    <div class="client-card slide-in">
+                        <div class="client-name">${expense.description}</div>
+                        <div class="client-info">💰 ${expense.amount.toFixed(2)}</div>
+                        <div class="client-info">📂 ${expense.category}</div>
+                        <div class="client-info">📅 ${new Date(expense.date).toLocaleDateString()}</div>
+                        ${expense.notes ? `<div class="client-info">📝 ${expense.notes}</div>` : ''}
+                        <div class="btn-group">
+                            <button class="btn btn-small btn-secondary" onclick="editExpense(${expense.id})">Edit</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteExpense(${expense.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function editExpense(expenseId) {
+            const expense = appData.expenses.find(e => e.id === expenseId);
+            if (expense) {
+                const newAmount = prompt(`Edit amount for ${expense.description}:\nCurrent: ${expense.amount}`, expense.amount);
+                if (newAmount !== null && !isNaN(newAmount)) {
+                    expense.amount = parseFloat(newAmount);
+                    addActivity(`Expense updated: ${expense.description} - ${expense.amount}`);
+                    saveAppData();
+                    renderExpenses();
+                    updateExpenseSummary();
+                    showNotification('Expense updated!');
+                }
+            }
+        }
+
+        function deleteExpense(expenseId) {
+            const expense = appData.expenses.find(e => e.id === expenseId);
+            if (expense && confirm(`Delete expense: ${expense.description}?`)) {
+                appData.expenses = appData.expenses.filter(e => e.id !== expenseId);
+                addActivity(`Expense deleted: ${expense.description}`);
+                saveAppData();
+                renderExpenses();
+                updateExpenseSummary();
+                showNotification('Expense deleted!');
+            }
+        }
+
+        // Calculator Functions (keeping existing functionality)
         function updateCalculator() {
             const projectType = document.getElementById('projectType').value;
             const materialGrade = document.getElementById('materialGrade').value;
@@ -1512,15 +3860,43 @@
                     <span>Total</span>
                     <strong>${total.toLocaleString()}</strong>
                 </div>
-                <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="createEstimateFromCalculation()">Create Estimate</button>
+                <div class="btn-group" style="margin-top: 16px;">
+                    <button class="btn btn-primary" onclick="createEstimateFromCalculation(${total})">Create Estimate</button>
+                    <button class="btn btn-secondary" onclick="saveCalculation()">Save Calculation</button>
+                </div>
             `;
         }
 
-        function createEstimateFromCalculation() {
-            alert('Estimate creation feature coming soon! For now, you can copy these numbers to create a manual estimate.');
+        function createEstimateFromCalculation(total) {
+            if (appData.clients.length === 0) {
+                alert('Please add a client first before creating an estimate.');
+                return;
+            }
+            
+            populateAllClientSelects();
+            document.getElementById('estimateModal').classList.add('active');
+            
+            setTimeout(() => {
+                const totalField = document.querySelector('#estimateForm [name="total"]');
+                const descriptionField = document.querySelector('#estimateForm [name="description"]');
+                const projectType = document.getElementById('projectType').value;
+                const sqft = document.getElementById('squareFootage').value;
+                
+                if (totalField) totalField.value = total.toFixed(2);
+                if (descriptionField) descriptionField.value = `${projectType} project - ${sqft} sq ft`;
+            }, 100);
         }
 
-        // Team Management
+        function saveCalculation() {
+            const projectType = document.getElementById('projectType').value;
+            const materialGrade = document.getElementById('materialGrade').value;
+            const sqft = document.getElementById('squareFootage').value;
+            
+            addActivity(`Calculation saved: ${projectType} ${materialGrade} - ${sqft} sq ft`);
+            showNotification('Calculation saved to activity log!');
+        }
+
+        // Team Management (keeping existing functionality)
         function openTeamModal() {
             document.getElementById('teamModal').classList.add('active');
         }
@@ -1546,17 +3922,24 @@
             renderTeamMembers();
             closeModal('teamModal');
             event.target.reset();
+            showNotification('Team member added successfully!');
         }
 
         function renderTeamMembers() {
             const container = document.getElementById('teamList');
             if (appData.teamMembers.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No team members yet</p>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👥</div>
+                        <h3>No team members yet</h3>
+                        <p>Add your first team member!</p>
+                    </div>
+                `;
                 return;
             }
             
             container.innerHTML = appData.teamMembers.map(member => `
-                <div style="display: flex; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 8px;" class="slide-in">
                     <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 12px;">
                         ${member.name.charAt(0)}
                     </div>
@@ -1564,6 +3947,7 @@
                         <div style="font-weight: 600; color: #1e293b;">${member.name}</div>
                         <div style="font-size: 12px; color: #64748b;">${member.role} • ${member.rate || 0}/hr</div>
                         <div style="font-size: 12px; color: #64748b;">${member.skills || 'N/A'}</div>
+                        ${member.phone ? `<div style="font-size: 12px; color: #64748b;">📞 ${member.phone}</div>` : ''}
                     </div>
                     <span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: 500; background: #dcfce7; color: #166534;">
                         ${member.status || 'available'}
@@ -1572,7 +3956,7 @@
             `).join('');
         }
 
-        // Photo Management
+        // Photo Management (keeping existing functionality)
         function handlePhotoUpload(event) {
             const files = Array.from(event.target.files);
             files.forEach(file => {
@@ -1591,6 +3975,7 @@
                         saveAppData();
                         renderPhotos();
                         addActivity(`Photo uploaded: ${photo.name}`);
+                        showNotification('Photo uploaded successfully!');
                     };
                     reader.readAsDataURL(file);
                 }
@@ -1605,7 +3990,7 @@
             }
             
             container.innerHTML = appData.photos.map(photo => `
-                <div style="position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #f1f5f9; cursor: pointer;" onclick="viewPhotoDetails(${photo.id})">
+                <div style="position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #f1f5f9; cursor: pointer;" onclick="viewPhotoDetails(${photo.id})" class="slide-in">
                     <img src="${photo.url}" alt="${photo.name}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
                     <div style="position: absolute; bottom: 4px; left: 4px; right: 4px; background: rgba(0,0,0,0.7); color: white; font-size: 10px; padding: 2px 4px; border-radius: 4px;">
                         ${photo.name.length > 15 ? photo.name.substring(0, 12) + '...' : photo.name}
@@ -1625,7 +4010,13 @@
         function renderInventory() {
             const container = document.getElementById('inventoryList');
             if (!appData.items || appData.items.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No inventory items yet</p>';
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📦</div>
+                        <h3>No inventory items yet</h3>
+                        <p>Add your first inventory item!</p>
+                    </div>
+                `;
                 return;
             }
             
@@ -1645,14 +4036,15 @@
             }
             
             container.innerHTML = items.map(item => `
-                <div class="client-card">
+                <div class="client-card slide-in">
                     <div class="client-name">${item.name}</div>
                     <div class="client-info">💰 ${item.price.toFixed(2)}</div>
                     <div class="client-info">📂 ${item.category}</div>
                     ${item.notes ? `<div class="client-info">📝 ${item.notes}</div>` : ''}
-                    <div style="margin-top: 8px;">
+                    <div class="btn-group">
                         <button class="btn btn-small btn-secondary" onclick="editItem(${item.id})">Edit</button>
                         <button class="btn btn-small btn-primary" onclick="addItemToEstimate(${item.id})">Add to Estimate</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteItem(${item.id})">Delete</button>
                     </div>
                 </div>
             `).join('');
@@ -1687,9 +4079,9 @@
             addActivity(`New item added: ${item.name} - ${item.price}`);
             saveAppData();
             renderInventory();
-            updateDashboard();
             closeModal('itemModal');
             event.target.reset();
+            showNotification('Item added successfully!');
         }
 
         function editItem(itemId) {
@@ -1701,7 +4093,19 @@
                     saveAppData();
                     renderInventory();
                     addActivity(`Updated item price: ${item.name} - ${item.price}`);
+                    showNotification('Item price updated!');
                 }
+            }
+        }
+
+        function deleteItem(itemId) {
+            const item = appData.items.find(i => i.id === itemId);
+            if (item && confirm(`Delete ${item.name}?`)) {
+                appData.items = appData.items.filter(i => i.id !== itemId);
+                addActivity(`Item deleted: ${item.name}`);
+                saveAppData();
+                renderInventory();
+                showNotification('Item deleted!');
             }
         }
 
@@ -1711,6 +4115,89 @@
                 alert(`Added ${item.name} (${item.price}) to estimate.\n\nFull estimate builder coming in next update!`);
                 addActivity(`Added ${item.name} to estimate`);
             }
+        }
+
+        // Reports Management
+        function generateReport() {
+            const report = {
+                generatedAt: new Date().toISOString(),
+                totalClients: appData.clients.length,
+                totalLeads: appData.leads.length,
+                activeProjects: appData.projects.filter(p => p.status !== 'completed').length,
+                completedProjects: appData.projects.filter(p => p.status === 'completed').length,
+                monthlyRevenue: calculateMonthlyRevenue(),
+                pendingInvoices: appData.invoices.filter(i => i.status === 'pending').length,
+                paidInvoices: appData.invoices.filter(i => i.status === 'paid').length,
+                totalExpenses: appData.expenses.reduce((sum, e) => sum + e.amount, 0)
+            };
+
+            const container = document.getElementById('reportsContent');
+            container.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Business Report - ${new Date().toLocaleDateString()}</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="grid grid-2">
+                            <div>
+                                <h4>Client Statistics</h4>
+                                <p>Total Clients: <strong>${report.totalClients}</strong></p>
+                                <p>Active Leads: <strong>${report.totalLeads}</strong></p>
+                                <p>Conversion Rate: <strong>${report.totalClients > 0 ? ((report.totalClients / (report.totalClients + report.totalLeads)) * 100).toFixed(1) : 0}%</strong></p>
+                            </div>
+                            <div>
+                                <h4>Project Statistics</h4>
+                                <p>Active Projects: <strong>${report.activeProjects}</strong></p>
+                                <p>Completed Projects: <strong>${report.completedProjects}</strong></p>
+                                <p>Success Rate: <strong>${report.activeProjects + report.completedProjects > 0 ? ((report.completedProjects / (report.activeProjects + report.completedProjects)) * 100).toFixed(1) : 0}%</strong></p>
+                            </div>
+                            <div>
+                                <h4>Financial Overview</h4>
+                                <p>Monthly Revenue: <strong>${report.monthlyRevenue.toLocaleString()}</strong></p>
+                                <p>Total Expenses: <strong>${report.totalExpenses.toLocaleString()}</strong></p>
+                                <p>Net Income: <strong>${(report.monthlyRevenue - report.totalExpenses).toLocaleString()}</strong></p>
+                            </div>
+                            <div>
+                                <h4>Invoice Status</h4>
+                                <p>Paid Invoices: <strong>${report.paidInvoices}</strong></p>
+                                <p>Pending Invoices: <strong>${report.pendingInvoices}</strong></p>
+                                <p>Payment Rate: <strong>${report.paidInvoices + report.pendingInvoices > 0 ? ((report.paidInvoices / (report.paidInvoices + report.pendingInvoices)) * 100).toFixed(1) : 0}%</strong></p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button class="btn btn-primary" onclick="exportReport()">Export Report</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Update dashboard stats
+            document.getElementById('monthlyProjects').textContent = report.completedProjects;
+            const growth = report.monthlyRevenue > 0 ? '+15%' : '0%'; // Simulated growth
+            document.getElementById('revenueGrowth').textContent = growth;
+
+            showNotification('Business report generated!');
+        }
+
+        function exportReport() {
+            const reportData = {
+                generatedAt: new Date().toISOString(),
+                clients: appData.clients.length,
+                leads: appData.leads.length,
+                projects: appData.projects.length,
+                revenue: calculateMonthlyRevenue(),
+                expenses: appData.expenses.reduce((sum, e) => sum + e.amount, 0)
+            };
+
+            const dataStr = JSON.stringify(reportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `mjd-report-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showNotification('Report exported successfully!');
         }
 
         // Utility Functions
@@ -1749,6 +4236,10 @@
             renderLeads();
             renderProjects();
             renderInvoices();
+            renderEstimates();
+            renderAppointments();
+            renderTasks();
+            renderExpenses();
             renderTeamMembers();
             renderPhotos();
             renderInventory();
@@ -1767,10 +4258,13 @@
                 'Add New Lead', 
                 'Create Project',
                 'Create Invoice',
+                'Schedule Appointment',
+                'Add Task',
+                'Add Expense',
                 'Upload Photos'
             ];
             
-            const choice = prompt('Quick Actions:\n\n' + actions.map((action, i) => `${i + 1}. ${action}`).join('\n') + '\n\nEnter number (1-5):');
+            const choice = prompt('Quick Actions:\n\n' + actions.map((action, i) => `${i + 1}. ${action}`).join('\n') + '\n\nEnter number (1-8):');
             
             switch(choice) {
                 case '1':
@@ -1786,6 +4280,15 @@
                     openInvoiceModal();
                     break;
                 case '5':
+                    openScheduleModal();
+                    break;
+                case '6':
+                    openTaskModal();
+                    break;
+                case '7':
+                    openExpenseModal();
+                    break;
+                case '8':
                     document.getElementById('photoUpload').click();
                     break;
             }
@@ -1803,7 +4306,7 @@
         }
 
         function createInvoiceForClient(clientId) {
-            populateClientSelects();
+            populateAllClientSelects();
             document.getElementById('invoiceModal').classList.add('active');
             // Pre-select the client
             setTimeout(() => {
@@ -1842,17 +4345,33 @@
                     {id:200009,name:"Ceramic tile install",price:12,notes:"Install ceramic tile flooring (includes all materials necessary)",category:"Labor",joistId:39212239}
                 ];
 
+                // Add sample data for demo purposes
+                const sampleLeads = [
+                    {id:300000,name:"Sarah Johnson",phone:"+15081234567",email:"sarah.j@email.com",projectType:"kitchen",estimatedValue:15000,source:"referral",notes:"Interested in full kitchen remodel",createdAt:"2025-01-06T21:00:00.000Z",status:"new",score:75},
+                    {id:300001,name:"Mike Thompson",phone:"+15087654321",email:"mthompson@email.com",projectType:"bathroom",estimatedValue:8000,source:"website",notes:"Master bathroom renovation",createdAt:"2025-01-05T21:00:00.000Z",status:"contacted",score:65}
+                ];
+
+                const sampleTasks = [
+                    {id:400000,title:"Follow up with Sarah Johnson",priority:"high",dueDate:"2025-01-08",assignedTo:"self",description:"Call about kitchen estimate",status:"pending",completed:false,createdAt:"2025-01-06T21:00:00.000Z"},
+                    {id:400001,title:"Order materials for Croteau project",priority:"medium",dueDate:"2025-01-10",assignedTo:"self",description:"Cherry st project supplies",status:"pending",completed:false,createdAt:"2025-01-06T21:00:00.000Z"}
+                ];
+
                 // Add imported data
                 appData.clients = importedClients;
                 appData.items = importedItems;
+                appData.leads = sampleLeads;
+                appData.tasks = sampleTasks;
                 
                 addActivity(`Imported ${appData.clients.length} clients and ${appData.items.length} items from Joist`);
                 saveAppData();
                 renderAllData();
                 updateDashboard();
+                populateAllClientSelects();
                 
-                console.log('✅ Real MJD Home Improvement data loaded successfully!');
+                console.log('✅ Complete MJD Home Improvement CRM loaded successfully!');
                 console.log(`📊 Clients: ${appData.clients.length}`);
+                console.log(`🎯 Leads: ${appData.leads.length}`);
+                console.log(`✅ Tasks: ${appData.tasks.length}`);
                 console.log(`🔧 Items: ${appData.items.length}`);
             }
         }
@@ -1871,7 +4390,361 @@
             }
         });
 
-        console.log('MJD Home Improvement CRM PWA loaded successfully!');
+        console.log('🚀 MJD Home Improvement CRM PWA loaded successfully!');
     </script>
 </body>
-</html>
+</html>input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <input type="text" class="form-input" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional client information..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Client</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm" onsubmit="saveLead(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="projectType" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Value</label>
+                        <input type="number" class="form-input" name="estimatedValue" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Source</label>
+                        <select class="form-select" name="source">
+                            <option value="referral">Referral</option>
+                            <option value="website">Website</option>
+                            <option value="social">Social Media</option>
+                            <option value="advertisement">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Lead details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Save Lead</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Project</h3>
+                <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="projectClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select project type</option>
+                            <option value="deck">Deck</option>
+                            <option value="kitchen">Kitchen Remodel</option>
+                            <option value="bathroom">Bathroom Remodel</option>
+                            <option value="siding">Siding</option>
+                            <option value="roofing">Roofing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-input" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-input" name="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Budget</label>
+                        <input type="number" class="form-input" name="budget" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Project details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Project</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Invoice</h3>
+                <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm" onsubmit="saveInvoice(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="invoiceClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Invoice notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Invoice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimate Modal -->
+    <div id="estimateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Estimate</h3>
+                <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="estimateForm" onsubmit="saveEstimate(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="estimateClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Estimated Total</label>
+                        <input type="number" step="0.01" class="form-input" name="total" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valid Until</label>
+                        <input type="date" class="form-input" name="validUntil" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional estimate details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Create Estimate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Appointment</h3>
+                <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="scheduleForm" onsubmit="saveAppointment(event)">
+                    <div class="form-group">
+                        <label class="form-label">Client</label>
+                        <select class="form-select" name="clientId" id="scheduleClientSelect" required>
+                            <option value="">Select client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Appointment Type</label>
+                        <select class="form-select" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="estimate">Estimate Visit</option>
+                            <option value="work">Work</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (hours)</label>
+                        <input type="number" step="0.5" class="form-input" name="duration" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Appointment details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Task</h3>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label class="form-label">Task Title</label>
+                        <input type="text" class="form-input" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-input" name="dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Assign to</label>
+                        <select class="form-select" name="assignedTo">
+                            <option value="">Select team member</option>
+                            <option value="self">Myself</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="Task details..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('expenseModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="expenseForm" onsubmit="saveExpense(event)">
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" step="0.01" class="form-input" name="amount" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="materials">Materials</option>
+                            <option value="tools">Tools</option>
+                            <option value="fuel">Fuel</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="office">Office Supplies</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Add Expense</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Team Member</h3>
+                <button class="modal-close" onclick="closeModal('teamModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="teamForm" onsubmit="saveTeamMember(event)">
+                    <div class="form-group">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role</label>
+                        <input type="text" class="form-input" name="role" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-
