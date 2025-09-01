@@ -235,10 +235,6 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        .grid-3 {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
         .stats-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -428,10 +424,6 @@
             .grid-2 {
                 grid-template-columns: 1fr;
             }
-            
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -496,37 +488,6 @@
                     <button class="btn btn-primary" onclick="openClientModal()">Add New Client</button>
                     <div id="clientsList" style="margin-top: 16px;">
                         <!-- Clients will be populated here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Inventory Tab -->
-        <div id="inventory" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Inventory Management</h3>
-                </div>
-                <div class="card-content">
-                    <div style="margin-bottom: 16px;">
-                        <input type="text" class="form-input" id="inventorySearch" placeholder="Search items..." onkeyup="searchInventory()" style="margin-bottom: 12px;">
-                        <select class="form-select" id="categoryFilter" onchange="filterInventory()" style="margin-bottom: 12px;">
-                            <option value="">All Categories</option>
-                            <option value="Labor">Labor</option>
-                            <option value="Lumber">Lumber</option>
-                            <option value="Tile">Tile</option>
-                            <option value="Electrical">Electrical</option>
-                            <option value="Plumbing">Plumbing</option>
-                            <option value="Paint">Paint</option>
-                            <option value="Drywall">Drywall</option>
-                            <option value="Doors & Windows">Doors & Windows</option>
-                            <option value="Roofing">Roofing</option>
-                            <option value="General">General</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" onclick="openItemModal()">Add New Item</button>
-                    <div id="inventoryList" style="margin-top: 16px;">
-                        <!-- Inventory items will be populated here -->
                     </div>
                 </div>
             </div>
@@ -644,6 +605,37 @@
                     <input type="file" id="photoUpload" style="display: none;" accept="image/*" multiple onchange="handlePhotoUpload(event)">
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; margin-top: 16px;" id="photoGrid">
                         <div style="display: flex; align-items: center; justify-content: center; height: 120px; color: #64748b; font-size: 12px; text-align: center; background: #f1f5f9; border-radius: 8px;">No photos uploaded yet</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Tab -->
+        <div id="inventory" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Inventory Management</h3>
+                </div>
+                <div class="card-content">
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" class="form-input" id="inventorySearch" placeholder="Search items..." onkeyup="searchInventory()" style="margin-bottom: 12px;">
+                        <select class="form-select" id="categoryFilter" onchange="filterInventory()" style="margin-bottom: 12px;">
+                            <option value="">All Categories</option>
+                            <option value="Labor">Labor</option>
+                            <option value="Lumber">Lumber</option>
+                            <option value="Tile">Tile</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Drywall">Drywall</option>
+                            <option value="Doors & Windows">Doors & Windows</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="openItemModal()">Add New Item</button>
+                    <div id="inventoryList" style="margin-top: 16px;">
+                        <!-- Inventory items will be populated here -->
                     </div>
                 </div>
             </div>
@@ -831,12 +823,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Project</label>
-                        <select class="form-select" name="projectId" id="invoiceProjectSelect">
-                            <option value="">Select project (optional)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label class="form-label">Description</label>
                         <input type="text" class="form-input" name="description" required>
                     </div>
@@ -888,6 +874,49 @@
                         <input type="text" class="form-input" name="skills" placeholder="e.g., Plumbing, Electrical, Carpentry">
                     </div>
                     <button type="submit" class="btn btn-primary">Add Team Member</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Item</h3>
+                <button class="modal-close" onclick="closeModal('itemModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm" onsubmit="saveItem(event)">
+                    <div class="form-group">
+                        <label class="form-label">Item Name</label>
+                        <input type="text" class="form-input" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <input type="number" step="0.01" class="form-input" name="price" required placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="Labor">Labor</option>
+                            <option value="Lumber">Lumber</option>
+                            <option value="Tile">Tile</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Paint">Paint</option>
+                            <option value="Drywall">Drywall</option>
+                            <option value="Doors & Windows">Doors & Windows</option>
+                            <option value="Roofing">Roofing</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <input type="text" class="form-input" name="notes" placeholder="Optional description">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
                 </form>
             </div>
         </div>
@@ -1068,110 +1097,78 @@
             `).join('');
         }
 
-        // Inventory Management
-        function renderInventory() {
-            const container = document.getElementById('inventoryList');
-            if (!appData.items || appData.items.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No inventory items yet</p>';
-                return;
-            }
-            
-            let items = appData.items;
-            const search = document.getElementById('inventorySearch')?.value?.toLowerCase() || '';
-            const category = document.getElementById('categoryFilter')?.value || '';
-            
-            // Apply filters
-            if (search) {
-                items = items.filter(item => 
-                    item.name.toLowerCase().includes(search) || 
-                    (item.notes && item.notes.toLowerCase().includes(search))
-                );
-            }
-            if (category) {
-                items = items.filter(item => item.category === category);
-            }
-            
-            container.innerHTML = items.map(item => `
-                <div class="client-card">
-                    <div class="client-name">${item.name}</div>
-                    <div class="client-info">💰 $${item.price.toFixed(2)}</div>
-                    <div class="client-info">📂 ${item.category}</div>
-                    ${item.notes ? `<div class="client-info">📝 ${item.notes}</div>` : ''}
-                    <div style="margin-top: 8px;">
-                        <button class="btn btn-small btn-secondary" onclick="editItem(${item.id})">Edit</button>
-                        <button class="btn btn-small btn-primary" onclick="addItemToEstimate(${item.id})">Add to Estimate</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function searchInventory() {
-            renderInventory();
-        }
-
-        function filterInventory() {
-            renderInventory();
-        }
-
-        function openItemModal() {
-            alert('Item modal would open here - modal code needs to be added for full functionality');
-        }
-
-        function editItem(itemId) {
-            const item = appData.items.find(i => i.id === itemId);
-            if (item) {
-                const newPrice = prompt(`Edit price for ${item.name}:\nCurrent: $${item.price}`, item.price);
-                if (newPrice !== null && !isNaN(newPrice)) {
-                    item.price = parseFloat(newPrice);
-                    saveAppData();
-                    renderInventory();
-                    addActivity(`Updated item price: ${item.name} - $${item.price}`);
-                }
-            }
-        }
-
-        function addItemToEstimate(itemId) {
-            const item = appData.items.find(i => i.id === itemId);
-            if (item) {
-                alert(`Added ${item.name} ($${item.price}) to estimate.\n\nFull estimate builder coming in next update!`);
-                addActivity(`Added ${item.name} to estimate`);
-            }
-        }
-
-        // Utility Functions
-        function addActivity(description) {
-            appData.activities.unshift({
-                id: Date.now(),
-                description,
-                timestamp: new Date().toISOString()
-            });
-            
-            // Keep only last 50 activities
-            if (appData.activities.length > 50) {
-                appData.activities = appData.activities.slice(0, 50);
-            }
-            
-            updateRecentActivity();
-        }
-
-        function updateRecentActivity() {
-            const container = document.getElementById('recentActivity');
-            if (appData.activities.length === 0) {
-                container.innerHTML = '<p style="color: #64748b; text-align: center;">No recent activity</p>';
-                return;
-            }
-            
-            container.innerHTML = appData.activities.slice(0, 5).map(activity => `
-                <div style="margin-bottom: 12px; padding: 8px; border-radius: 8px; background: #f8fafc;">
-                    <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">${new Date(activity.timestamp).toLocaleString()}</div>
-                    <div>${activity.description}</div>
-                </div>
-            `).join('');
-        }
-
         // Lead Management
         function openLeadModal() {
-            alert('Lead modal would open here - modal code needs to be added');
+            document.getElementById('leadModal').classList.add('active');
+        }
+
+        function saveLead(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const lead = {
+                id: Date.now(),
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                projectType: formData.get('projectType'),
+                estimatedValue: parseFloat(formData.get('estimatedValue')) || 0,
+                source: formData.get('source'),
+                createdAt: new Date().toISOString(),
+                status: 'new',
+                score: calculateLeadScore({
+                    estimatedValue: parseFloat(formData.get('estimatedValue')) || 0,
+                    source: formData.get('source'),
+                    projectType: formData.get('projectType'),
+                    createdAt: new Date().toISOString()
+                })
+            };
+            
+            appData.leads.push(lead);
+            addActivity(`New lead added: ${lead.name} (Score: ${lead.score})`);
+            saveAppData();
+            renderLeads();
+            updateDashboard();
+            closeModal('leadModal');
+            event.target.reset();
+        }
+
+        function calculateLeadScore(lead) {
+            let score = 0;
+            
+            // Project value (0-40 points)
+            if (lead.estimatedValue >= 20000) score += 40;
+            else if (lead.estimatedValue >= 10000) score += 30;
+            else if (lead.estimatedValue >= 5000) score += 20;
+            else score += 10;
+            
+            // Source quality (0-20 points)
+            const sourceScores = {
+                referral: 20,
+                website: 15,
+                social: 10,
+                advertisement: 8,
+                other: 5
+            };
+            score += sourceScores[lead.source] || 5;
+            
+            // Recency (0-20 points)
+            const daysOld = (Date.now() - new Date(lead.createdAt)) / (1000 * 60 * 60 * 24);
+            if (daysOld < 1) score += 20;
+            else if (daysOld < 3) score += 15;
+            else if (daysOld < 7) score += 10;
+            else score += 5;
+            
+            // Project type (0-20 points)
+            const projectScores = {
+                kitchen: 20,
+                bathroom: 18,
+                roofing: 15,
+                siding: 12,
+                deck: 10
+            };
+            score += projectScores[lead.projectType] || 10;
+            
+            return Math.min(100, score);
         }
 
         function renderLeads() {
@@ -1181,19 +1178,108 @@
                 return;
             }
             
-            container.innerHTML = appData.leads.map(lead => `
-                <div class="client-card">
-                    <div class="client-name">${lead.name}</div>
-                    <div class="client-info">📞 ${lead.phone}</div>
-                    <div class="client-info">🏗️ ${lead.projectType || 'N/A'}</div>
-                    <div class="client-info">💰 ${(lead.estimatedValue || 0).toLocaleString()}</div>
-                </div>
-            `).join('');
+            const sortedLeads = appData.leads.sort((a, b) => b.score - a.score);
+            
+            container.innerHTML = sortedLeads.map(lead => {
+                const scoreClass = lead.score >= 70 ? 'lead-score-high' : 
+                                 lead.score >= 40 ? 'lead-score-medium' : 'lead-score-low';
+                
+                return `
+                    <div class="client-card">
+                        <div class="client-name">
+                            ${lead.name}
+                            <span class="lead-score ${scoreClass}">${lead.score}</span>
+                        </div>
+                        <div class="client-info">📞 ${lead.phone}</div>
+                        <div class="client-info">🏗️ ${lead.projectType}</div>
+                        <div class="client-info">💰 $${lead.estimatedValue.toLocaleString()}</div>
+                        <div class="client-info">📊 ${lead.source}</div>
+                        <div style="margin-top: 8px;">
+                            <button class="btn btn-small btn-success" onclick="convertLead(${lead.id})">Convert to Client</button>
+                            <button class="btn btn-small btn-secondary" onclick="contactLead(${lead.id})">Contact</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function convertLead(leadId) {
+            const lead = appData.leads.find(l => l.id === leadId);
+            if (lead) {
+                const client = {
+                    id: Date.now(),
+                    name: lead.name,
+                    phone: lead.phone,
+                    email: lead.email,
+                    address: '',
+                    createdAt: new Date().toISOString(),
+                    projects: []
+                };
+                
+                appData.clients.push(client);
+                appData.leads = appData.leads.filter(l => l.id !== leadId);
+                addActivity(`Lead converted to client: ${lead.name}`);
+                saveAppData();
+                renderLeads();
+                renderClients();
+                updateDashboard();
+            }
+        }
+
+        function contactLead(leadId) {
+            const lead = appData.leads.find(l => l.id === leadId);
+            if (lead) {
+                const action = confirm(`Contact ${lead.name}?\n\nPhone: ${lead.phone}\nEmail: ${lead.email}\n\nClick OK to call, Cancel to send SMS`);
+                if (action) {
+                    window.location.href = `tel:${lead.phone}`;
+                } else {
+                    window.location.href = `sms:${lead.phone}?body=Hi ${lead.name}, this is MJD Home Improvement regarding your ${lead.projectType} project. When would be a good time to discuss your project?`;
+                }
+            }
         }
 
         // Project Management
         function openProjectModal() {
-            alert('Project modal would open here - modal code needs to be added');
+            populateClientSelects();
+            document.getElementById('projectModal').classList.add('active');
+        }
+
+        function populateClientSelects() {
+            const selects = ['projectClientSelect', 'invoiceClientSelect'];
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    select.innerHTML = '<option value="">Select client</option>' + 
+                        appData.clients.map(client => 
+                            `<option value="${client.id}">${client.name}</option>`
+                        ).join('');
+                }
+            });
+        }
+
+        function saveProject(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const project = {
+                id: Date.now(),
+                clientId: parseInt(formData.get('clientId')),
+                name: formData.get('name'),
+                type: formData.get('type'),
+                startDate: formData.get('startDate'),
+                endDate: formData.get('endDate'),
+                budget: parseFloat(formData.get('budget')) || 0,
+                progress: 0,
+                status: 'planning',
+                createdAt: new Date().toISOString()
+            };
+            
+            appData.projects.push(project);
+            addActivity(`New project created: ${project.name}`);
+            saveAppData();
+            renderProjects();
+            updateDashboard();
+            closeModal('projectModal');
+            event.target.reset();
         }
 
         function renderProjects() {
@@ -1203,21 +1289,94 @@
                 return;
             }
             
-            container.innerHTML = appData.projects.map(project => `
-                <div class="client-card">
-                    <div class="client-name">${project.name}</div>
-                    <div class="client-info">🏗️ ${project.type}</div>
-                    <div class="client-info">💰 ${(project.budget || 0).toLocaleString()}</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${project.progress || 0}%"></div>
+            container.innerHTML = appData.projects.map(project => {
+                const client = appData.clients.find(c => c.id === project.clientId);
+                const statusColors = {
+                    planning: '#f59e0b',
+                    in_progress: '#3b82f6',
+                    completed: '#10b981',
+                    on_hold: '#ef4444'
+                };
+                
+                return `
+                    <div class="client-card">
+                        <div class="client-name">${project.name}</div>
+                        <div class="client-info">👤 ${client ? client.name : 'Unknown Client'}</div>
+                        <div class="client-info">🏗️ ${project.type}</div>
+                        <div class="client-info">💰 $${project.budget.toLocaleString()}</div>
+                        <div class="client-info">📅 ${project.startDate} to ${project.endDate}</div>
+                        <div style="margin-top: 8px;">
+                            <span style="color: ${statusColors[project.status]}">● ${project.status.replace('_', ' ')}</span>
+                            <div class="progress-bar" style="margin-top: 8px;">
+                                <div class="progress-fill" style="width: ${project.progress}%"></div>
+                            </div>
+                            <div style="margin-top: 8px;">
+                                <button class="btn btn-small btn-secondary" onclick="updateProjectProgress(${project.id})">Update Progress</button>
+                                <button class="btn btn-small btn-primary" onclick="createInvoiceForProject(${project.id})">Create Invoice</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+
+        function updateProjectProgress(projectId) {
+            const project = appData.projects.find(p => p.id === projectId);
+            if (project) {
+                const newProgress = prompt(`Current progress: ${project.progress}%\nEnter new progress (0-100):`);
+                if (newProgress !== null && !isNaN(newProgress)) {
+                    project.progress = Math.max(0, Math.min(100, parseInt(newProgress)));
+                    if (project.progress === 100) {
+                        project.status = 'completed';
+                        addActivity(`Project completed: ${project.name}`);
+                    }
+                    saveAppData();
+                    renderProjects();
+                }
+            }
+        }
+
+        function createInvoiceForProject(projectId) {
+            populateClientSelects();
+            document.getElementById('invoiceModal').classList.add('active');
         }
 
         // Invoice Management
         function openInvoiceModal() {
-            alert('Invoice modal would open here - modal code needs to be added');
+            populateClientSelects();
+            document.getElementById('invoiceModal').classList.add('active');
+        }
+
+        function saveInvoice(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const invoice = {
+                id: Date.now(),
+                clientId: parseInt(formData.get('clientId')),
+                description: formData.get('description'),
+                amount: parseFloat(formData.get('amount')),
+                dueDate: formData.get('dueDate'),
+                status: 'pending',
+                date: new Date().toISOString(),
+                paymentLinks: generatePaymentLinks(parseFloat(formData.get('amount')))
+            };
+            
+            appData.invoices.push(invoice);
+            addActivity(`New invoice created: $${invoice.amount} for ${appData.clients.find(c => c.id === invoice.clientId)?.name || 'Unknown Client'}`);
+            saveAppData();
+            renderInvoices();
+            updateDashboard();
+            closeModal('invoiceModal');
+            event.target.reset();
+        }
+
+        function generatePaymentLinks(amount) {
+            return {
+                venmo: `https://venmo.com/code?user_id=MJDHomeImprovement&amount=${amount}&note=Invoice Payment`,
+                paypal: `https://paypal.me/mjdhomeimprovement/${amount}`,
+                cashapp: `https://cash.app/$mjdhomeimprovement/${amount}`,
+                stripe: `#stripe-payment-${amount}`
+            };
         }
 
         function renderInvoices() {
@@ -1227,14 +1386,62 @@
                 return;
             }
             
-            container.innerHTML = appData.invoices.map(invoice => `
-                <div class="client-card">
-                    <div class="client-name">Invoice #${invoice.id}</div>
-                    <div class="client-info">💰 ${(invoice.amount || 0).toLocaleString()}</div>
-                    <div class="client-info">📅 Due: ${invoice.dueDate || 'N/A'}</div>
-                    <div class="client-info">Status: ${invoice.status || 'pending'}</div>
-                </div>
-            `).join('');
+            container.innerHTML = appData.invoices.map(invoice => {
+                const client = appData.clients.find(c => c.id === invoice.clientId);
+                const statusColors = {
+                    pending: '#f59e0b',
+                    paid: '#10b981',
+                    overdue: '#ef4444',
+                    partial: '#3b82f6'
+                };
+                
+                const isOverdue = new Date(invoice.dueDate) < new Date() && invoice.status === 'pending';
+                const currentStatus = isOverdue ? 'overdue' : invoice.status;
+                
+                return `
+                    <div class="client-card">
+                        <div class="client-name">
+                            Invoice #${invoice.id}
+                            <span style="color: ${statusColors[currentStatus]}; font-size: 12px;">● ${currentStatus}</span>
+                        </div>
+                        <div class="client-info">👤 ${client ? client.name : 'Unknown Client'}</div>
+                        <div class="client-info">📝 ${invoice.description}</div>
+                        <div class="client-info">💰 $${invoice.amount.toLocaleString()}</div>
+                        <div class="client-info">📅 Due: ${invoice.dueDate}</div>
+                        ${invoice.status === 'pending' ? `
+                            <div style="margin-top: 12px;">
+                                <a href="${invoice.paymentLinks.venmo}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with Venmo</a>
+                                <a href="${invoice.paymentLinks.paypal}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with PayPal</a>
+                                <a href="${invoice.paymentLinks.cashapp}" style="display: block; padding: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; border-radius: 6px; text-align: center; font-weight: 500; margin: 4px 0;" target="_blank">Pay with CashApp</a>
+                            </div>
+                        ` : ''}
+                        <div style="margin-top: 8px;">
+                            <button class="btn btn-small btn-secondary" onclick="viewInvoiceDetails(${invoice.id})">View Details</button>
+                            ${invoice.status === 'pending' ? `<button class="btn btn-small btn-success" onclick="markInvoicePaid(${invoice.id})">Mark Paid</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewInvoiceDetails(invoiceId) {
+            const invoice = appData.invoices.find(i => i.id === invoiceId);
+            if (invoice) {
+                const client = appData.clients.find(c => c.id === invoice.clientId);
+                alert(`Invoice #${invoice.id}\nClient: ${client?.name || 'Unknown'}\nAmount: $${invoice.amount}\nDue: ${invoice.dueDate}\nStatus: ${invoice.status}`);
+            }
+        }
+
+        function markInvoicePaid(invoiceId) {
+            const invoice = appData.invoices.find(i => i.id === invoiceId);
+            if (invoice) {
+                invoice.status = 'paid';
+                invoice.paidDate = new Date().toISOString();
+                addActivity(`Invoice paid: $${invoice.amount}`);
+                saveAppData();
+                renderInvoices();
+                updateDashboard();
+            }
         }
 
         // Calculator Functions
@@ -1315,7 +1522,30 @@
 
         // Team Management
         function openTeamModal() {
-            alert('Team modal would open here - modal code needs to be added');
+            document.getElementById('teamModal').classList.add('active');
+        }
+
+        function saveTeamMember(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const member = {
+                id: Date.now(),
+                name: formData.get('name'),
+                role: formData.get('role'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                rate: parseFloat(formData.get('rate')) || 0,
+                skills: formData.get('skills'),
+                status: 'available',
+                joinDate: new Date().toISOString()
+            };
+            
+            appData.teamMembers.push(member);
+            addActivity(`New team member added: ${member.name}`);
+            saveAppData();
+            renderTeamMembers();
+            closeModal('teamModal');
+            event.target.reset();
         }
 
         function renderTeamMembers() {
@@ -1391,6 +1621,140 @@
             }
         }
 
+        // Inventory Management
+        function renderInventory() {
+            const container = document.getElementById('inventoryList');
+            if (!appData.items || appData.items.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No inventory items yet</p>';
+                return;
+            }
+            
+            let items = appData.items;
+            const search = document.getElementById('inventorySearch')?.value?.toLowerCase() || '';
+            const category = document.getElementById('categoryFilter')?.value || '';
+            
+            // Apply filters
+            if (search) {
+                items = items.filter(item => 
+                    item.name.toLowerCase().includes(search) || 
+                    (item.notes && item.notes.toLowerCase().includes(search))
+                );
+            }
+            if (category) {
+                items = items.filter(item => item.category === category);
+            }
+            
+            container.innerHTML = items.map(item => `
+                <div class="client-card">
+                    <div class="client-name">${item.name}</div>
+                    <div class="client-info">💰 ${item.price.toFixed(2)}</div>
+                    <div class="client-info">📂 ${item.category}</div>
+                    ${item.notes ? `<div class="client-info">📝 ${item.notes}</div>` : ''}
+                    <div style="margin-top: 8px;">
+                        <button class="btn btn-small btn-secondary" onclick="editItem(${item.id})">Edit</button>
+                        <button class="btn btn-small btn-primary" onclick="addItemToEstimate(${item.id})">Add to Estimate</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchInventory() {
+            renderInventory();
+        }
+
+        function filterInventory() {
+            renderInventory();
+        }
+
+        function openItemModal() {
+            document.getElementById('itemModal').classList.add('active');
+        }
+
+        function saveItem(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const item = {
+                id: Date.now(),
+                name: formData.get('name'),
+                price: parseFloat(formData.get('price')),
+                category: formData.get('category'),
+                notes: formData.get('notes') || '',
+                createdAt: new Date().toISOString()
+            };
+            
+            if (!appData.items) appData.items = [];
+            appData.items.push(item);
+            addActivity(`New item added: ${item.name} - ${item.price}`);
+            saveAppData();
+            renderInventory();
+            updateDashboard();
+            closeModal('itemModal');
+            event.target.reset();
+        }
+
+        function editItem(itemId) {
+            const item = appData.items.find(i => i.id === itemId);
+            if (item) {
+                const newPrice = prompt(`Edit price for ${item.name}:\nCurrent: ${item.price}`, item.price);
+                if (newPrice !== null && !isNaN(newPrice)) {
+                    item.price = parseFloat(newPrice);
+                    saveAppData();
+                    renderInventory();
+                    addActivity(`Updated item price: ${item.name} - ${item.price}`);
+                }
+            }
+        }
+
+        function addItemToEstimate(itemId) {
+            const item = appData.items.find(i => i.id === itemId);
+            if (item) {
+                alert(`Added ${item.name} (${item.price}) to estimate.\n\nFull estimate builder coming in next update!`);
+                addActivity(`Added ${item.name} to estimate`);
+            }
+        }
+
+        // Utility Functions
+        function addActivity(description) {
+            appData.activities.unshift({
+                id: Date.now(),
+                description,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Keep only last 50 activities
+            if (appData.activities.length > 50) {
+                appData.activities = appData.activities.slice(0, 50);
+            }
+            
+            updateRecentActivity();
+        }
+
+        function updateRecentActivity() {
+            const container = document.getElementById('recentActivity');
+            if (appData.activities.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center;">No recent activity</p>';
+                return;
+            }
+            
+            container.innerHTML = appData.activities.slice(0, 5).map(activity => `
+                <div style="margin-bottom: 12px; padding: 8px; border-radius: 8px; background: #f8fafc;">
+                    <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">${new Date(activity.timestamp).toLocaleString()}</div>
+                    <div>${activity.description}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderAllData() {
+            renderClients();
+            renderLeads();
+            renderProjects();
+            renderInvoices();
+            renderTeamMembers();
+            renderPhotos();
+            renderInventory();
+            updateRecentActivity();
+        }
+
         // Modal Functions
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
@@ -1413,18 +1777,41 @@
                     openClientModal();
                     break;
                 case '2':
-                    alert('Lead modal coming soon');
+                    openLeadModal();
                     break;
                 case '3':
-                    alert('Project modal coming soon');
+                    openProjectModal();
                     break;
                 case '4':
-                    alert('Invoice modal coming soon');
+                    openInvoiceModal();
                     break;
                 case '5':
-                    alert('Photo upload coming soon');
+                    document.getElementById('photoUpload').click();
                     break;
             }
+        }
+
+        // Helper functions
+        function viewClientProjects(clientId) {
+            const client = appData.clients.find(c => c.id === clientId);
+            const clientProjects = appData.projects.filter(p => p.clientId === clientId);
+            if (clientProjects.length === 0) {
+                alert(`${client?.name || 'Client'} has no projects yet.`);
+            } else {
+                alert(`${client?.name || 'Client'} has ${clientProjects.length} project(s):\n\n${clientProjects.map(p => `• ${p.name} (${p.status})`).join('\n')}`);
+            }
+        }
+
+        function createInvoiceForClient(clientId) {
+            populateClientSelects();
+            document.getElementById('invoiceModal').classList.add('active');
+            // Pre-select the client
+            setTimeout(() => {
+                const clientSelect = document.getElementById('invoiceClientSelect');
+                if (clientSelect) {
+                    clientSelect.value = clientId;
+                }
+            }, 100);
         }
 
         // Import your real data
@@ -1468,15 +1855,6 @@
                 console.log(`📊 Clients: ${appData.clients.length}`);
                 console.log(`🔧 Items: ${appData.items.length}`);
             }
-        }
-
-        // Placeholder functions to prevent errors
-        function viewClientProjects(clientId) {
-            alert('Project view feature coming soon');
-        }
-
-        function createInvoiceForClient(clientId) {
-            alert('Invoice creation feature coming soon');
         }
 
         // Auto-save functionality
